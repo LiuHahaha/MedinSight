@@ -1,0 +1,445 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		002E37561538367D00C356DB /* 3a.dcm in Resources */ = {isa = PBXBuildFile; fileRef = 002E37551538367D00C356DB /* 3a.dcm */; };
+		008B56DA1582FAFF00E059CA /* 14 in Resources */ = {isa = PBXBuildFile; fileRef = 008B56D91582FAFF00E059CA /* 14 */; };
+		009875D617C4AC7D00477F83 /* 影像图标 57 57.png in Resources */ = {isa = PBXBuildFile; fileRef = 009875D317C4AC7D00477F83 /* 影像图标 57 57.png */; };
+		009875D717C4AC7D00477F83 /* 影像图标 72 72.png in Resources */ = {isa = PBXBuildFile; fileRef = 009875D417C4AC7D00477F83 /* 影像图标 72 72.png */; };
+		009875D817C4AC7D00477F83 /* 影像图标 144 144.png in Resources */ = {isa = PBXBuildFile; fileRef = 009875D517C4AC7D00477F83 /* 影像图标 144 144.png */; };
+		00A0EE1017695A5B003BD348 /* BackgrandView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A0EE0F17695A5B003BD348 /* BackgrandView.m */; };
+		00EC6C7217C0C4D200A67499 /* DeckView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00EC6C7117C0C4D200A67499 /* DeckView.m */; };
+		00EC6C7517C0C4FB00A67499 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00EC6C7417C0C4FB00A67499 /* MainView.m */; };
+		E3AF4A0F14AD90C100158E33 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3AF4A0E14AD90C100158E33 /* UIKit.framework */; };
+		E3AF4A1114AD90C100158E33 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3AF4A1014AD90C100158E33 /* Foundation.framework */; };
+		E3AF4A1314AD90C100158E33 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3AF4A1214AD90C100158E33 /* CoreGraphics.framework */; };
+		E3AF4A1914AD90C100158E33 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E3AF4A1714AD90C100158E33 /* InfoPlist.strings */; };
+		E3AF4A1B14AD90C100158E33 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AF4A1A14AD90C100158E33 /* main.m */; };
+		E3AF4A1F14AD90C100158E33 /* KSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AF4A1E14AD90C100158E33 /* KSAppDelegate.m */; };
+		E3AF4A2214AD90C100158E33 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3AF4A2014AD90C100158E33 /* MainStoryboard_iPhone.storyboard */; };
+		E3AF4A2514AD90C100158E33 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3AF4A2314AD90C100158E33 /* MainStoryboard_iPad.storyboard */; };
+		E3AF4A2814AD90C100158E33 /* KSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AF4A2714AD90C100158E33 /* KSViewController.m */; };
+		E3AF4A4414AD944C00158E33 /* test.dcm in Resources */ = {isa = PBXBuildFile; fileRef = E3AF4A4314AD944C00158E33 /* test.dcm */; };
+		E3AF4A5514AD953A00158E33 /* DicomDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3AF4A4E14AD953A00158E33 /* DicomDictionary.plist */; };
+		E3AF4A5614AD953A00158E33 /* KSDicomDecoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = E3AF4A5114AD953A00158E33 /* KSDicomDecoder.mm */; };
+		E3AF4A5714AD953A00158E33 /* KSDicomDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AF4A5314AD953A00158E33 /* KSDicomDictionary.m */; };
+		E3AF4A5814AD953A00158E33 /* KSDicom2DView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AF4A5414AD953A00158E33 /* KSDicom2DView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0016A01A17675ED20015347A /* MBProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		0016A01B17675ED20015347A /* MBProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		002E37551538367D00C356DB /* 3a.dcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = 3a.dcm; sourceTree = "<group>"; };
+		008B56D91582FAFF00E059CA /* 14 */ = {isa = PBXFileReference; lastKnownFileType = text; path = 14; sourceTree = "<group>"; };
+		009875D317C4AC7D00477F83 /* 影像图标 57 57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "影像图标 57 57.png"; sourceTree = "<group>"; };
+		009875D417C4AC7D00477F83 /* 影像图标 72 72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "影像图标 72 72.png"; sourceTree = "<group>"; };
+		009875D517C4AC7D00477F83 /* 影像图标 144 144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "影像图标 144 144.png"; sourceTree = "<group>"; };
+		00A0EE0E17695A5B003BD348 /* BackgrandView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgrandView.h; sourceTree = "<group>"; };
+		00A0EE0F17695A5B003BD348 /* BackgrandView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgrandView.m; sourceTree = "<group>"; };
+		00EC6C7017C0C4D200A67499 /* DeckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckView.h; sourceTree = "<group>"; };
+		00EC6C7117C0C4D200A67499 /* DeckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckView.m; sourceTree = "<group>"; };
+		00EC6C7317C0C4FB00A67499 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
+		00EC6C7417C0C4FB00A67499 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
+		E3AF4A0A14AD90C100158E33 /* MedinSight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MedinSight.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3AF4A0E14AD90C100158E33 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E3AF4A1014AD90C100158E33 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E3AF4A1214AD90C100158E33 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E3AF4A1614AD90C100158E33 /* MedinSight-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MedinSight-Info.plist"; sourceTree = "<group>"; };
+		E3AF4A1814AD90C100158E33 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E3AF4A1A14AD90C100158E33 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E3AF4A1C14AD90C100158E33 /* MedinSight-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MedinSight-Prefix.pch"; sourceTree = "<group>"; };
+		E3AF4A1D14AD90C100158E33 /* KSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSAppDelegate.h; sourceTree = "<group>"; };
+		E3AF4A1E14AD90C100158E33 /* KSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KSAppDelegate.m; sourceTree = "<group>"; };
+		E3AF4A2114AD90C100158E33 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		E3AF4A2414AD90C100158E33 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		E3AF4A2614AD90C100158E33 /* KSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSViewController.h; sourceTree = "<group>"; };
+		E3AF4A2714AD90C100158E33 /* KSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KSViewController.m; sourceTree = "<group>"; };
+		E3AF4A4314AD944C00158E33 /* test.dcm */ = {isa = PBXFileReference; lastKnownFileType = file; name = test.dcm; path = Resources/test.dcm; sourceTree = "<group>"; };
+		E3AF4A4E14AD953A00158E33 /* DicomDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = DicomDictionary.plist; path = Dicom/DicomDictionary.plist; sourceTree = "<group>"; };
+		E3AF4A4F14AD953A00158E33 /* KSDicom2DView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSDicom2DView.h; path = Dicom/KSDicom2DView.h; sourceTree = "<group>"; };
+		E3AF4A5014AD953A00158E33 /* KSDicomDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSDicomDecoder.h; path = Dicom/KSDicomDecoder.h; sourceTree = "<group>"; };
+		E3AF4A5114AD953A00158E33 /* KSDicomDecoder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = KSDicomDecoder.mm; path = Dicom/KSDicomDecoder.mm; sourceTree = "<group>"; };
+		E3AF4A5214AD953A00158E33 /* KSDicomDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSDicomDictionary.h; path = Dicom/KSDicomDictionary.h; sourceTree = "<group>"; };
+		E3AF4A5314AD953A00158E33 /* KSDicomDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSDicomDictionary.m; path = Dicom/KSDicomDictionary.m; sourceTree = "<group>"; };
+		E3AF4A5414AD953A00158E33 /* KSDicom2DView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSDicom2DView.m; path = Dicom/KSDicom2DView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E3AF4A0714AD90C100158E33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3AF4A0F14AD90C100158E33 /* UIKit.framework in Frameworks */,
+				E3AF4A1114AD90C100158E33 /* Foundation.framework in Frameworks */,
+				E3AF4A1314AD90C100158E33 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0016A01817675EBB0015347A /* MBP */ = {
+			isa = PBXGroup;
+			children = (
+				0016A01A17675ED20015347A /* MBProgressHUD.h */,
+				0016A01B17675ED20015347A /* MBProgressHUD.m */,
+			);
+			name = MBP;
+			sourceTree = "<group>";
+		};
+		00A0EE1317695A6F003BD348 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				00EC6C7017C0C4D200A67499 /* DeckView.h */,
+				00EC6C7117C0C4D200A67499 /* DeckView.m */,
+				00EC6C7317C0C4FB00A67499 /* MainView.h */,
+				00EC6C7417C0C4FB00A67499 /* MainView.m */,
+				00A0EE0E17695A5B003BD348 /* BackgrandView.h */,
+				00A0EE0F17695A5B003BD348 /* BackgrandView.m */,
+				E3AF4A4F14AD953A00158E33 /* KSDicom2DView.h */,
+				E3AF4A5414AD953A00158E33 /* KSDicom2DView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		E3AF49FF14AD90C100158E33 = {
+			isa = PBXGroup;
+			children = (
+				E3AF4A1414AD90C100158E33 /* MedinSight */,
+				E3AF4A0D14AD90C100158E33 /* Frameworks */,
+				E3AF4A0B14AD90C100158E33 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E3AF4A0B14AD90C100158E33 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3AF4A0A14AD90C100158E33 /* MedinSight.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3AF4A0D14AD90C100158E33 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E3AF4A0E14AD90C100158E33 /* UIKit.framework */,
+				E3AF4A1014AD90C100158E33 /* Foundation.framework */,
+				E3AF4A1214AD90C100158E33 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E3AF4A1414AD90C100158E33 /* MedinSight */ = {
+			isa = PBXGroup;
+			children = (
+				E3AF4A2F14AD90D000158E33 /* Classes */,
+				E3AF4A2E14AD90C600158E33 /* Resources */,
+				E3AF4A1514AD90C100158E33 /* Supporting Files */,
+			);
+			path = MedinSight;
+			sourceTree = "<group>";
+		};
+		E3AF4A1514AD90C100158E33 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E3AF4A1614AD90C100158E33 /* MedinSight-Info.plist */,
+				E3AF4A1714AD90C100158E33 /* InfoPlist.strings */,
+				E3AF4A1A14AD90C100158E33 /* main.m */,
+				E3AF4A1C14AD90C100158E33 /* MedinSight-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E3AF4A2E14AD90C600158E33 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				009875D317C4AC7D00477F83 /* 影像图标 57 57.png */,
+				009875D417C4AC7D00477F83 /* 影像图标 72 72.png */,
+				009875D517C4AC7D00477F83 /* 影像图标 144 144.png */,
+				E3AF4A4214AD939200158E33 /* DicomRes */,
+				E3AF4A3E14AD920B00158E33 /* Nibs */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		E3AF4A2F14AD90D000158E33 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				00A0EE1317695A6F003BD348 /* View */,
+				0016A01817675EBB0015347A /* MBP */,
+				E3AF4A3214AD913C00158E33 /* Dicom */,
+				E3AF4A3114AD911100158E33 /* Controller */,
+				E3AF4A3014AD910500158E33 /* Misc */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		E3AF4A3014AD910500158E33 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				E3AF4A1D14AD90C100158E33 /* KSAppDelegate.h */,
+				E3AF4A1E14AD90C100158E33 /* KSAppDelegate.m */,
+			);
+			name = Misc;
+			sourceTree = "<group>";
+		};
+		E3AF4A3114AD911100158E33 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E3AF4A2714AD90C100158E33 /* KSViewController.m */,
+				E3AF4A2614AD90C100158E33 /* KSViewController.h */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		E3AF4A3214AD913C00158E33 /* Dicom */ = {
+			isa = PBXGroup;
+			children = (
+				E3AF4A4E14AD953A00158E33 /* DicomDictionary.plist */,
+				E3AF4A5014AD953A00158E33 /* KSDicomDecoder.h */,
+				E3AF4A5114AD953A00158E33 /* KSDicomDecoder.mm */,
+				E3AF4A5214AD953A00158E33 /* KSDicomDictionary.h */,
+				E3AF4A5314AD953A00158E33 /* KSDicomDictionary.m */,
+			);
+			name = Dicom;
+			sourceTree = "<group>";
+		};
+		E3AF4A3E14AD920B00158E33 /* Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				E3AF4A2014AD90C100158E33 /* MainStoryboard_iPhone.storyboard */,
+				E3AF4A2314AD90C100158E33 /* MainStoryboard_iPad.storyboard */,
+			);
+			name = Nibs;
+			sourceTree = "<group>";
+		};
+		E3AF4A4214AD939200158E33 /* DicomRes */ = {
+			isa = PBXGroup;
+			children = (
+				008B56D91582FAFF00E059CA /* 14 */,
+				002E37551538367D00C356DB /* 3a.dcm */,
+				E3AF4A4314AD944C00158E33 /* test.dcm */,
+			);
+			name = DicomRes;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E3AF4A0914AD90C100158E33 /* MedinSight */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E3AF4A2B14AD90C100158E33 /* Build configuration list for PBXNativeTarget "MedinSight" */;
+			buildPhases = (
+				E3AF4A0614AD90C100158E33 /* Sources */,
+				E3AF4A0714AD90C100158E33 /* Frameworks */,
+				E3AF4A0814AD90C100158E33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MedinSight;
+			productName = DicomViewer;
+			productReference = E3AF4A0A14AD90C100158E33 /* MedinSight.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E3AF4A0114AD90C100158E33 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "United-Imaging";
+			};
+			buildConfigurationList = E3AF4A0414AD90C100158E33 /* Build configuration list for PBXProject "MedinSight" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E3AF49FF14AD90C100158E33;
+			productRefGroup = E3AF4A0B14AD90C100158E33 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E3AF4A0914AD90C100158E33 /* MedinSight */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E3AF4A0814AD90C100158E33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3AF4A1914AD90C100158E33 /* InfoPlist.strings in Resources */,
+				E3AF4A2214AD90C100158E33 /* MainStoryboard_iPhone.storyboard in Resources */,
+				E3AF4A2514AD90C100158E33 /* MainStoryboard_iPad.storyboard in Resources */,
+				E3AF4A4414AD944C00158E33 /* test.dcm in Resources */,
+				E3AF4A5514AD953A00158E33 /* DicomDictionary.plist in Resources */,
+				002E37561538367D00C356DB /* 3a.dcm in Resources */,
+				008B56DA1582FAFF00E059CA /* 14 in Resources */,
+				009875D617C4AC7D00477F83 /* 影像图标 57 57.png in Resources */,
+				009875D717C4AC7D00477F83 /* 影像图标 72 72.png in Resources */,
+				009875D817C4AC7D00477F83 /* 影像图标 144 144.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E3AF4A0614AD90C100158E33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3AF4A1B14AD90C100158E33 /* main.m in Sources */,
+				E3AF4A1F14AD90C100158E33 /* KSAppDelegate.m in Sources */,
+				E3AF4A2814AD90C100158E33 /* KSViewController.m in Sources */,
+				E3AF4A5614AD953A00158E33 /* KSDicomDecoder.mm in Sources */,
+				E3AF4A5714AD953A00158E33 /* KSDicomDictionary.m in Sources */,
+				E3AF4A5814AD953A00158E33 /* KSDicom2DView.m in Sources */,
+				00A0EE1017695A5B003BD348 /* BackgrandView.m in Sources */,
+				00EC6C7217C0C4D200A67499 /* DeckView.m in Sources */,
+				00EC6C7517C0C4FB00A67499 /* MainView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E3AF4A1714AD90C100158E33 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3AF4A1814AD90C100158E33 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E3AF4A2014AD90C100158E33 /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3AF4A2114AD90C100158E33 /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		E3AF4A2314AD90C100158E33 /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3AF4A2414AD90C100158E33 /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E3AF4A2914AD90C100158E33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nan Bao (67QHMJ2D4E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PROVISIONING_PROFILE = "34AB10FB-E6C9-4155-AE26-BA001823E8CC";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E3AF4A2A14AD90C100158E33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nan Bao (67QHMJ2D4E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "34AB10FB-E6C9-4155-AE26-BA001823E8CC";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E3AF4A2C14AD90C100158E33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nan Bao (67QHMJ2D4E)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MedinSight/MedinSight-Prefix.pch";
+				INFOPLIST_FILE = "MedinSight/MedinSight-Info.plist";
+				PRODUCT_NAME = MedinSight;
+				PROVISIONING_PROFILE = "34AB10FB-E6C9-4155-AE26-BA001823E8CC";
+				TARGETED_DEVICE_FAMILY = 2;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E3AF4A2D14AD90C100158E33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nan Bao (67QHMJ2D4E)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MedinSight/MedinSight-Prefix.pch";
+				INFOPLIST_FILE = "MedinSight/MedinSight-Info.plist";
+				PRODUCT_NAME = MedinSight;
+				PROVISIONING_PROFILE = "34AB10FB-E6C9-4155-AE26-BA001823E8CC";
+				TARGETED_DEVICE_FAMILY = 2;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E3AF4A0414AD90C100158E33 /* Build configuration list for PBXProject "MedinSight" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3AF4A2914AD90C100158E33 /* Debug */,
+				E3AF4A2A14AD90C100158E33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E3AF4A2B14AD90C100158E33 /* Build configuration list for PBXNativeTarget "MedinSight" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3AF4A2C14AD90C100158E33 /* Debug */,
+				E3AF4A2D14AD90C100158E33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E3AF4A0114AD90C100158E33 /* Project object */;
+}
