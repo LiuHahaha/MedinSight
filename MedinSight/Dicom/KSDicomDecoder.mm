@@ -96,7 +96,7 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
         dict            = [[KSDicomDictionary alloc] init];
         dicomInfoDict   = [[NSMutableDictionary alloc] init];
         
-        dicomFileName   = [[NSString alloc] initWithString:@""];
+        dicomFileName   = @"";
     }
     
     return self;
@@ -112,13 +112,7 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
     SAFE_FREE(pixels24);
     SAFE_FREE(pixels8);
 
-    [dicomData release];
-    [dict release];
-    [dicomInfoDict release];
-    
-    [dicomFileName release];
-    
-    [super dealloc];
+
 }
 
 - (void) setDicomFilename:(NSString *)filename
@@ -135,10 +129,8 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
         return;
     }
     
-    [dicomFileName release];
     dicomFileName = [filename copy];
     
-    [dicomData release];
     dicomData = [[NSData alloc] initWithContentsOfFile:dicomFileName];
     
     if ([dicomData length] == 0) {
@@ -146,7 +138,7 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
         return;
     }
     
-    DLog(@" >> Info: setup Dicom file %@", filename);
+    //DLog(@" >> Info: setup Dicom file %@", filename);
     
     dicomFileReadSuccess    = NO;
     signedImage             = NO;
@@ -161,7 +153,7 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
     BOOL result = [self readFileInfo];
     if (result)
     {
-        DLog(@" >> Info: Succeed to read file data %@", filename);
+        //DLog(@" >> Info: Succeed to read file data %@", filename);
         
         [self readPixels];
     
@@ -207,7 +199,7 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
     NSString *retValue = [[NSString alloc] initWithCString:buf encoding:NSUTF8StringEncoding];
     SAFE_FREE(buf);
 
-    return [retValue autorelease];
+    return retValue;
 }
 
 - (Byte) getByte
@@ -480,13 +472,13 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
     if ([str isEqualToString:ITEM])
     {
         tmp = (tmp != nil ? tmp : @":null");
-        NSString * retValue = [[[NSString alloc] initWithString:tmp] autorelease];
+        NSString * retValue = [[NSString alloc] initWithString:tmp];
         return retValue ;
     }
     
     if (inValue != nil)
     {
-        NSString * retValue = [[[NSString alloc] initWithFormat:@"%@: %@", tmp, inValue] autorelease];
+        NSString * retValue = [[NSString alloc] initWithFormat:@"%@: %@", tmp, inValue];
         return retValue;
     }
     
@@ -567,7 +559,7 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
     
     if (!NSStringIsNilOrEmpty(value) && tmp == nil)
     {
-        NSString *retValue = [[[NSString alloc] initWithFormat:@"---: %@", value] autorelease];
+        NSString *retValue = [[NSString alloc] initWithFormat:@"---: %@", value];
         return retValue;
     }
     
@@ -576,7 +568,7 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
         return nil;
     }
      
-    NSString *retValue = [[[NSString alloc] initWithFormat:@"%@: %@", tmp, value] autorelease];
+    NSString *retValue = [[NSString alloc] initWithFormat:@"%@: %@", tmp, value];
     return retValue;
 }
 
@@ -620,7 +612,7 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
 
     NSRange range = [info rangeOfString:@":"];
     if (range.location == NSNotFound) {
-        return [[info retain] autorelease];
+        return info;
     }
     
     NSString * retValue = [info substringFromIndex:(range.location + 1)];
@@ -628,7 +620,7 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
         return @"";
     
     retValue = [retValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    return [[retValue retain] autorelease];
+    return retValue;
 }
 
 - (void) getSpatialScale:(NSString *) scale

@@ -35,10 +35,8 @@ static KSDicomDictionary *instance;
 
 - (void) dealloc
 {
-    [dictionary release];
     dictionary = nil;
 
-    [super dealloc];
 }
 
 - (id) valueForKey:(NSString *)key

@@ -1,133 +1,136 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C54" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Kge-dm-zgT">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
-        <scene sceneID="4">
+        <scene sceneID="Tvq-Bc-wBN">
             <objects>
-                <viewController id="2" customClass="KSViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5" customClass="DeckView">
-                        <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
+                <viewController id="Kge-dm-zgT" customClass="KSViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LMw-Cb-d1l" customClass="DeckView">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="gH9-Tw-pAU" customClass="MainView">
+                            <view contentMode="scaleToFill" id="uv2-ib-4Rz" customClass="MainView">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1026"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" id="5fw-Kv-7nR" customClass="KSDicom2DView">
-                                        <rect key="frame" x="20" y="133" width="360" height="360"/>
+                                    <view contentMode="scaleToFill" id="jBZ-Yb-FxB" userLabel="View - Axial" customClass="KSDicom2DView">
+                                        <rect key="frame" x="20" y="129" width="360" height="360"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
                                         <connections>
-                                            <outletCollection property="gestureRecognizers" destination="8KJ-ey-Cny" appends="YES" id="09c-4k-5nD"/>
-                                            <outletCollection property="gestureRecognizers" destination="jV4-UE-ju3" appends="YES" id="XgN-Tu-tGT"/>
-                                            <outletCollection property="gestureRecognizers" destination="uzG-77-HUW" appends="YES" id="nPR-XA-cLE"/>
-                                            <outletCollection property="gestureRecognizers" destination="FyK-kr-SgI" appends="YES" id="Zx9-bH-u2l"/>
-                                            <outletCollection property="gestureRecognizers" destination="l85-1o-nDI" appends="YES" id="t0R-4M-S8T"/>
+                                            <outletCollection property="gestureRecognizers" destination="nKz-hP-VfC" appends="YES" id="94w-ma-qBe"/>
+                                            <outletCollection property="gestureRecognizers" destination="GhH-FY-OO3" appends="YES" id="u1L-Ub-1ca"/>
+                                            <outletCollection property="gestureRecognizers" destination="vce-6k-r6s" appends="YES" id="e1z-JB-tWB"/>
+                                            <outletCollection property="gestureRecognizers" destination="NzL-sK-E1U" appends="YES" id="iy7-E9-Pel"/>
+                                            <outletCollection property="gestureRecognizers" destination="Gfr-tL-jRn" appends="YES" id="Oi7-tj-snw"/>
                                         </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" id="1SJ-eq-13W" customClass="KSDicom2DView">
-                                        <rect key="frame" x="388" y="133" width="360" height="360"/>
+                                    <view contentMode="scaleToFill" id="Cgi-bh-web" userLabel="View - Coronal" customClass="KSDicom2DView">
+                                        <rect key="frame" x="388" y="129" width="360" height="360"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
                                         <connections>
-                                            <outletCollection property="gestureRecognizers" destination="iIZ-3w-SiK" appends="YES" id="7q1-5M-oVF"/>
-                                            <outletCollection property="gestureRecognizers" destination="2ZW-Mu-xqa" appends="YES" id="GhO-5O-nr9"/>
-                                            <outletCollection property="gestureRecognizers" destination="7p6-qH-12m" appends="YES" id="eA8-Sf-N46"/>
-                                            <outletCollection property="gestureRecognizers" destination="9v7-b0-ulc" appends="YES" id="hYS-Ik-1cP"/>
-                                            <outletCollection property="gestureRecognizers" destination="Pqx-1o-2BW" appends="YES" id="28c-sE-7IC"/>
+                                            <outletCollection property="gestureRecognizers" destination="sxl-jE-jjY" appends="YES" id="F9n-Sb-KcT"/>
+                                            <outletCollection property="gestureRecognizers" destination="9AO-aM-ujA" appends="YES" id="8TU-hq-cOc"/>
+                                            <outletCollection property="gestureRecognizers" destination="NUX-b1-MHf" appends="YES" id="mJh-im-cO4"/>
+                                            <outletCollection property="gestureRecognizers" destination="nAH-Xi-8xF" appends="YES" id="BXS-0e-TPU"/>
+                                            <outletCollection property="gestureRecognizers" destination="d6p-G7-VA3" appends="YES" id="Z4R-8Y-rOh"/>
                                         </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" id="Ct3-Me-lo5" customClass="KSDicom2DView">
-                                        <rect key="frame" x="20" y="501" width="360" height="360"/>
+                                    <view contentMode="scaleToFill" id="j0c-9D-k7g" userLabel="View - Saggital" customClass="KSDicom2DView">
+                                        <rect key="frame" x="20" y="497" width="360" height="360"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
                                         <connections>
-                                            <outletCollection property="gestureRecognizers" destination="LYn-ne-nPS" appends="YES" id="wXG-T7-nFe"/>
-                                            <outletCollection property="gestureRecognizers" destination="wvp-YI-bL3" appends="YES" id="gKu-ea-hxy"/>
-                                            <outletCollection property="gestureRecognizers" destination="pQc-f3-kKe" appends="YES" id="b9p-0T-thN"/>
-                                            <outletCollection property="gestureRecognizers" destination="Ogd-rE-ivc" appends="YES" id="rH8-o7-TQX"/>
-                                            <outletCollection property="gestureRecognizers" destination="Q0H-mf-0eA" appends="YES" id="VsI-Mh-qov"/>
+                                            <outletCollection property="gestureRecognizers" destination="seK-BU-bIz" appends="YES" id="5yw-25-9Vf"/>
+                                            <outletCollection property="gestureRecognizers" destination="uRS-JH-Dfh" appends="YES" id="HO0-63-0y7"/>
+                                            <outletCollection property="gestureRecognizers" destination="j4q-fd-9ZI" appends="YES" id="FBb-6M-nbr"/>
+                                            <outletCollection property="gestureRecognizers" destination="6V3-FL-mDj" appends="YES" id="dAu-jk-Mbo"/>
+                                            <outletCollection property="gestureRecognizers" destination="JS2-l8-E6A" appends="YES" id="iW8-uB-dtq"/>
                                         </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" id="v54-4G-Kuw" customClass="KSDicom2DView">
-                                        <rect key="frame" x="388" y="501" width="360" height="360"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <gestureRecognizers/>
-                                    </view>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="qZP-CP-Mbv">
-                                        <rect key="frame" x="489" y="58" width="319" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="4cw-SU-amj" userLabel="Label - PlaneID">
+                                        <rect key="frame" x="20" y="41" width="181" height="75"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="60"/>
+                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="wvz-Px-K6e">
-                                        <rect key="frame" x="489" y="75" width="319" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="g5E-JF-S9G" userLabel="Label - Patient">
+                                        <rect key="frame" x="473" y="41" width="319" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="VKF-R6-hG6">
-                                        <rect key="frame" x="489" y="94" width="319" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="V1L-hr-vrU" userLabel="Label - Modality">
+                                        <rect key="frame" x="473" y="58" width="319" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="3EK-6t-i3y">
-                                        <rect key="frame" x="489" y="112" width="319" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="19O-em-07t" userLabel="Label - WW/WL">
+                                        <rect key="frame" x="473" y="77" width="319" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="iWo-MN-8Oz">
-                                        <rect key="frame" x="111" y="962" width="524" height="23"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="4lM-xN-qwK" userLabel="Label - Date">
+                                        <rect key="frame" x="473" y="95" width="319" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="wL9-Pb-fh2">
+                                        <rect key="frame" x="122" y="905" width="524" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </slider>
-                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="WqM-yP-Vqn">
-                                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="0qk-1K-xWV">
+                                        <rect key="frame" x="0.0" y="982" width="768" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <items>
-                                            <barButtonItem title="Read Data" id="hkO-LY-Yec">
+                                            <barButtonItem title="Read Data" id="t69-y1-o6Q">
                                                 <connections>
-                                                    <action selector="btnDataRead:" destination="2" id="Uof-OM-Le9"/>
+                                                    <action selector="btnDataRead:" destination="Kge-dm-zgT" id="Y0j-F7-Jll"/>
                                                 </connections>
                                             </barButtonItem>
-                                            <barButtonItem style="plain" id="TOw-e6-26J">
-                                                <switch key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="JFT-S5-1WI">
-                                                    <rect key="frame" x="96" y="9" width="79" height="27"/>
+                                            <barButtonItem style="plain" id="VBo-eQ-7J1">
+                                                <switch key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Oe8-hJ-Xt7">
+                                                    <rect key="frame" x="107" y="7" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <connections>
-                                                        <action selector="switch_Link_WW_WL:" destination="2" eventType="valueChanged" id="hKf-o6-xTf"/>
+                                                        <action selector="switch_Link_WW_WL:" destination="Kge-dm-zgT" eventType="valueChanged" id="W6z-u0-ErK"/>
                                                     </connections>
                                                 </switch>
                                             </barButtonItem>
-                                            <barButtonItem width="330" style="plain" systemItem="fixedSpace" id="1wk-f1-Txn"/>
-                                            <barButtonItem title="DownLoad" id="cmc-s6-aDp">
+                                            <barButtonItem width="330" style="plain" systemItem="fixedSpace" id="mnP-tG-CXb"/>
+                                            <barButtonItem title="DownLoad" id="aIk-by-jdO">
                                                 <connections>
-                                                    <action selector="reDownLoadFromServer:" destination="2" id="W1v-PX-PD5"/>
+                                                    <action selector="reDownLoadFromServer:" destination="Kge-dm-zgT" id="rgE-I9-00I"/>
                                                 </connections>
                                             </barButtonItem>
-                                            <barButtonItem style="plain" id="rRW-IP-vbP">
-                                                <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="dDd-tW-QVL">
-                                                    <rect key="frame" x="607" y="7" width="159" height="30"/>
+                                            <barButtonItem style="plain" id="Wrd-Se-FWT">
+                                                <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="N7r-2x-Rko">
+                                                    <rect key="frame" x="592" y="7" width="159" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <segments>
                                                         <segment title="Translation"/>
@@ -137,192 +140,121 @@
                                             </barButtonItem>
                                         </items>
                                     </toolbar>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Med inSight" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="1" id="M6b-Dk-BZd">
-                                        <rect key="frame" x="277" y="0.0" width="174" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="U1k-wD-Zpp">
-                                        <rect key="frame" x="20" y="48" width="181" height="41"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </label>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="qIS-qq-UGI" appends="YES" id="DU0-1v-wjN"/>
+                                    <outletCollection property="gestureRecognizers" destination="KKt-0x-5Ka" appends="YES" id="vRF-LE-AM5"/>
                                 </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="DoubleTap" destination="FyK-kr-SgI" id="5aV-zX-oRy"/>
-                        <outlet property="SingleTap" destination="l85-1o-nDI" id="Wqx-Gn-u9A"/>
-                        <outlet property="date" destination="3EK-6t-i3y" id="2kZ-NY-g8a"/>
-                        <outlet property="deckView" destination="5" id="T0z-iD-qTf"/>
-                        <outlet property="dicom2DView" destination="5fw-Kv-7nR" id="RuH-mr-6Sc"/>
-                        <outlet property="dicom2DView2" destination="Ct3-Me-lo5" id="CyX-Ix-a6J"/>
-                        <outlet property="dicom2DView3" destination="1SJ-eq-13W" id="wYH-36-Naz"/>
-                        <outlet property="dicom2DView4" destination="v54-4G-Kuw" id="aHs-L0-go9"/>
-                        <outlet property="mainView" destination="gH9-Tw-pAU" id="9OE-ge-1L4"/>
-                        <outlet property="modality" destination="wvz-Px-K6e" id="4OF-ls-Zrq"/>
-                        <outlet property="patientName" destination="qZP-CP-Mbv" id="enL-oM-pdf"/>
-                        <outlet property="seg_indicator_Trans_or_WW_WL" destination="dDd-tW-QVL" id="j0P-n9-b2R"/>
-                        <outlet property="slider" destination="iWo-MN-8Oz" id="QAB-zf-Ty4"/>
-                        <outlet property="switch_indicator_Link_WW_WL" destination="JFT-S5-1WI" id="wuq-US-0lQ"/>
-                        <outlet property="viewIndicator" destination="U1k-wD-Zpp" id="9fB-rg-GdZ"/>
-                        <outlet property="windowInfo" destination="VKF-R6-hG6" id="rWl-po-Myc"/>
+                        <outlet property="DoubleTap" destination="NzL-sK-E1U" id="Huf-4U-bzt"/>
+                        <outlet property="SingleTap" destination="Gfr-tL-jRn" id="Bcz-DO-go5"/>
+                        <outlet property="date" destination="4lM-xN-qwK" id="Um2-sD-kCq"/>
+                        <outlet property="deckView" destination="LMw-Cb-d1l" id="eDa-WA-Ph9"/>
+                        <outlet property="dicom2DView" destination="jBZ-Yb-FxB" id="d4N-gz-ouC"/>
+                        <outlet property="dicom2DView2" destination="j0c-9D-k7g" id="1dB-ET-HbZ"/>
+                        <outlet property="dicom2DView3" destination="Cgi-bh-web" id="veU-37-jWC"/>
+                        <outlet property="mainView" destination="uv2-ib-4Rz" id="92d-d6-PAj"/>
+                        <outlet property="modality" destination="V1L-hr-vrU" id="j7H-gJ-qjJ"/>
+                        <outlet property="patientName" destination="g5E-JF-S9G" id="jyC-OK-HeM"/>
+                        <outlet property="seg_indicator_Trans_or_WW_WL" destination="N7r-2x-Rko" id="xqb-5i-1MN"/>
+                        <outlet property="slider" destination="wL9-Pb-fh2" id="ruA-gG-jqw"/>
+                        <outlet property="switch_indicator_Link_WW_WL" destination="Oe8-hJ-Xt7" id="ard-Ig-ZJd"/>
+                        <outlet property="viewIndicator" destination="4cw-SU-amj" id="3oN-YP-kwd"/>
+                        <outlet property="windowInfo" destination="19O-em-07t" id="BW9-4N-dfX"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="l85-1o-nDI">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HFH-YF-dcM" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Gfr-tL-jRn" userLabel="Tap - Axial">
                     <connections>
-                        <action selector="handleSingleTap:" destination="2" id="fXh-dk-4eo"/>
+                        <action selector="handleSingleTap:" destination="Kge-dm-zgT" id="Qxr-62-Nfh"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer numberOfTapsRequired="2" id="FyK-kr-SgI">
+                <tapGestureRecognizer numberOfTapsRequired="2" id="NzL-sK-E1U" userLabel="Tap - Axial">
                     <connections>
-                        <action selector="handleDoubleTap:" destination="2" id="4RE-Gb-TII"/>
+                        <action selector="handleDoubleTap:" destination="Kge-dm-zgT" id="kFe-08-BUU"/>
                     </connections>
                 </tapGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="8KJ-ey-Cny">
+                <panGestureRecognizer minimumNumberOfTouches="1" id="nKz-hP-VfC" userLabel="Pan - Axial">
                     <connections>
-                        <action selector="handlePan:" destination="2" id="tFE-Pl-y7u"/>
+                        <action selector="handlePan:" destination="Kge-dm-zgT" id="ltB-G1-T7o"/>
                     </connections>
                 </panGestureRecognizer>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="uzG-77-HUW">
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="vce-6k-r6s" userLabel="Long Press - Axial">
                     <connections>
-                        <action selector="handleLongPress:" destination="2" id="umf-FX-Qcu"/>
+                        <action selector="handleLongPress:" destination="Kge-dm-zgT" id="wQ8-Dh-Glf"/>
                     </connections>
                 </pongPressGestureRecognizer>
-                <pinchGestureRecognizer id="jV4-UE-ju3">
+                <pinchGestureRecognizer id="GhH-FY-OO3" userLabel="Pinch - Axial">
                     <connections>
-                        <action selector="handlePinch:" destination="2" id="ZwA-o7-vT9"/>
+                        <action selector="handlePinch:" destination="Kge-dm-zgT" id="TdE-Dz-cbA"/>
                     </connections>
                 </pinchGestureRecognizer>
-                <tapGestureRecognizer id="LYn-ne-nPS">
+                <tapGestureRecognizer id="nAH-Xi-8xF" userLabel="Tap - Coronal">
                     <connections>
-                        <action selector="handleYOZViewSingleTap:" destination="2" id="Vf5-Pr-Eki"/>
+                        <action selector="handleXOZViewSingleTap:" destination="Kge-dm-zgT" id="s7t-c0-L1O"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer numberOfTapsRequired="2" id="Ogd-rE-ivc">
+                <tapGestureRecognizer numberOfTapsRequired="2" id="d6p-G7-VA3" userLabel="Tap - Coronal">
                     <connections>
-                        <action selector="handleDoubleTap:" destination="2" id="fa6-HJ-1av"/>
+                        <action selector="handleDoubleTap:" destination="Kge-dm-zgT" id="Qfs-vH-ahJ"/>
                     </connections>
                 </tapGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="wvp-YI-bL3">
+                <panGestureRecognizer minimumNumberOfTouches="1" id="9AO-aM-ujA" userLabel="Pan - Coronal">
                     <connections>
-                        <action selector="handlePan:" destination="2" id="vZB-cs-HOV"/>
+                        <action selector="handlePan:" destination="Kge-dm-zgT" id="u14-pO-9Xn"/>
                     </connections>
                 </panGestureRecognizer>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="Q0H-mf-0eA">
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="sxl-jE-jjY" userLabel="Long Press - Coronal">
                     <connections>
-                        <action selector="handleYOZViewLongPress:" destination="2" id="vX2-fV-ezD"/>
+                        <action selector="handleXOZViewLongPress:" destination="Kge-dm-zgT" id="qOJ-Ir-lBp"/>
                     </connections>
                 </pongPressGestureRecognizer>
-                <pinchGestureRecognizer id="pQc-f3-kKe">
+                <pinchGestureRecognizer id="NUX-b1-MHf" userLabel="Pinch - Coronal">
                     <connections>
-                        <action selector="handlePinch:" destination="2" id="U58-kl-xGS"/>
+                        <action selector="handlePinch:" destination="Kge-dm-zgT" id="caX-Ca-Sor"/>
                     </connections>
                 </pinchGestureRecognizer>
-                <tapGestureRecognizer id="9v7-b0-ulc">
+                <tapGestureRecognizer id="seK-BU-bIz" userLabel="Tap - Saggital">
                     <connections>
-                        <action selector="handleXOZViewSingleTap:" destination="2" id="QoW-0x-rY5"/>
+                        <action selector="handleYOZViewSingleTap:" destination="Kge-dm-zgT" id="ElC-JF-VlD"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer numberOfTapsRequired="2" id="Pqx-1o-2BW">
+                <tapGestureRecognizer numberOfTapsRequired="2" id="6V3-FL-mDj" userLabel="Tap - Saggital">
                     <connections>
-                        <action selector="handleDoubleTap:" destination="2" id="0nC-r8-EDk"/>
+                        <action selector="handleDoubleTap:" destination="Kge-dm-zgT" id="BTz-tL-azy"/>
                     </connections>
                 </tapGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="2ZW-Mu-xqa">
+                <panGestureRecognizer minimumNumberOfTouches="1" id="uRS-JH-Dfh" userLabel="Pan - Saggital">
                     <connections>
-                        <action selector="handlePan:" destination="2" id="2Fj-of-yJc"/>
+                        <action selector="handlePan:" destination="Kge-dm-zgT" id="xUh-0p-qc3"/>
                     </connections>
                 </panGestureRecognizer>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="iIZ-3w-SiK">
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="JS2-l8-E6A" userLabel="Long Press - Saggital">
                     <connections>
-                        <action selector="handleXOZViewLongPress:" destination="2" id="8br-bR-knW"/>
+                        <action selector="handleYOZViewLongPress:" destination="Kge-dm-zgT" id="rwi-Cv-kkJ"/>
                     </connections>
                 </pongPressGestureRecognizer>
-                <pinchGestureRecognizer id="7p6-qH-12m">
+                <pinchGestureRecognizer id="j4q-fd-9ZI" userLabel="Pinch - Saggital">
                     <connections>
-                        <action selector="handlePinch:" destination="2" id="jVx-Au-vas"/>
+                        <action selector="handlePinch:" destination="Kge-dm-zgT" id="XJ0-9G-MPm"/>
                     </connections>
                 </pinchGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="qIS-qq-UGI">
+                <panGestureRecognizer minimumNumberOfTouches="1" id="KKt-0x-5Ka" userLabel="Pan Gesture - Main">
                     <connections>
-                        <action selector="handleMainViewPan:" destination="2" id="SAk-Gd-NvE"/>
+                        <action selector="handleMainViewPan:" destination="Kge-dm-zgT" id="4k1-jR-Oba"/>
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1702" y="-201"/>
+            <point key="canvasLocation" x="1019" y="-259"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="BackgrandView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BackgrandView.h"/>
-        </class>
-        <class className="DeckView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DeckView.h"/>
-        </class>
-        <class className="KSDicom2DView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/KSDicom2DView.h"/>
-        </class>
-        <class className="KSViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/KSViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="btnDataRead:"/>
-                <relationship kind="action" name="handleDoubleTap:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="handleLongPress:" candidateClass="UILongPressGestureRecognizer"/>
-                <relationship kind="action" name="handleMainViewPan:" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="action" name="handlePan:" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="action" name="handlePanGestureToPanImage:" candidateClass="UIGestureRecognizer"/>
-                <relationship kind="action" name="handlePinch:" candidateClass="UIPinchGestureRecognizer"/>
-                <relationship kind="action" name="handlePinchGesture:" candidateClass="UIPinchGestureRecognizer"/>
-                <relationship kind="action" name="handleSingleTap:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="handleTapGesture:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="handleXOZViewLongPress:" candidateClass="UILongPressGestureRecognizer"/>
-                <relationship kind="action" name="handleXOZViewSingleTap:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="handleYOZViewLongPress:" candidateClass="UILongPressGestureRecognizer"/>
-                <relationship kind="action" name="handleYOZViewSingleTap:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="reDownLoadFromServer:"/>
-                <relationship kind="action" name="switch_Link_WW_WL:" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="DoubleTap" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="SingleTap" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="backgroudView" candidateClass="BackgrandView"/>
-                <relationship kind="outlet" name="btnDataRead" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="date" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="deckView" candidateClass="DeckView"/>
-                <relationship kind="outlet" name="dicom2DView" candidateClass="KSDicom2DView"/>
-                <relationship kind="outlet" name="dicom2DView2" candidateClass="KSDicom2DView"/>
-                <relationship kind="outlet" name="dicom2DView3" candidateClass="KSDicom2DView"/>
-                <relationship kind="outlet" name="dicom2DView4" candidateClass="KSDicom2DView"/>
-                <relationship kind="outlet" name="mainView" candidateClass="MainView"/>
-                <relationship kind="outlet" name="modality" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="patientName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="seg_indicator_Trans_or_WW_WL" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="segmentedWW_WL_Trans" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="slider" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="switch_indicator_Link_WW_WL" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="viewIndicator" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="windowInfo" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="MainView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MainView.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
+        <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>

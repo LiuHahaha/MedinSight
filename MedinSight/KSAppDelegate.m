@@ -61,7 +61,7 @@ NSData *applicationDataFromFile(NSString *fileName) {
         
     }
     
-	/*if (0 == [fileNameArray count]) 
+	if (0 == [fileNameArray count]) 
     {
 		
 		NSString *mainBundleDirectory = [[NSBundle mainBundle] bundlePath];
@@ -83,8 +83,7 @@ NSData *applicationDataFromFile(NSString *fileName) {
 
 - (void)dealloc
 {
-    [_window release];
-    [super dealloc];
+    
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

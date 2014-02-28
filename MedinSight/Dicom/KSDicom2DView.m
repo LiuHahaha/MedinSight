@@ -94,7 +94,6 @@
     SAFE_FREE(lut8);
     SAFE_FREE(lut16);
     
-    [super dealloc];
 }
 
 - (void)drawRect:(CGRect)rect
@@ -167,7 +166,7 @@
     [self resetImage];
     
     colorspace = CGColorSpaceCreateDeviceGray();
-    bitmapContext = CGBitmapContextCreate(imageData, imgWidth, imgHeight, 8, imgWidth, colorspace, kCGImageAlphaNone);
+    bitmapContext = CGBitmapContextCreate(imageData, imgWidth, imgHeight, 8, imgWidth, colorspace, (CGBitmapInfo)kCGImageAlphaNone);
     bitmapImage = CGBitmapContextCreateImage(bitmapContext);
     
     SAFE_FREE(imageData);
@@ -198,7 +197,7 @@
     [self resetImage];
     
     colorspace = CGColorSpaceCreateDeviceGray();
-    bitmapContext = CGBitmapContextCreate(imageData, imgWidth, imgHeight, 8, imgWidth, colorspace, kCGImageAlphaNone);
+    bitmapContext = CGBitmapContextCreate(imageData, imgWidth, imgHeight, 8, imgWidth, colorspace, (CGBitmapInfo)kCGImageAlphaNone);
     bitmapImage = CGBitmapContextCreateImage(bitmapContext);
     
     SAFE_FREE(imageData);
@@ -238,7 +237,7 @@
     [self resetImage];
     
     colorspace = CGColorSpaceCreateDeviceRGB();
-    bitmapContext = CGBitmapContextCreate(imageData, imgWidth, imgHeight, 8, width4, colorspace, kCGImageAlphaNoneSkipLast);
+    bitmapContext = CGBitmapContextCreate(imageData, imgWidth, imgHeight, 8, width4, colorspace, (CGBitmapInfo)kCGImageAlphaNoneSkipLast);
     bitmapImage = CGBitmapContextCreateImage(bitmapContext);
     
     SAFE_FREE(imageData);
@@ -249,7 +248,7 @@
     if (bitmapImage)
     {
         UIImage * image = [[UIImage alloc] initWithCGImage:bitmapImage];
-        return [image autorelease];
+        return image;
     }
     
     return nil;
@@ -342,14 +341,17 @@
         changeValCentre = 25;
     }
     
-    pix16       = pixel;
+    pix16 = pixel;
     
     imageAvailable = YES;
     
+    //根据参数重置winMax, winMin
     [self resetValues];
     
+    //建立查找表，把 winMin ~ winMax 灰度 映射到 0 ~ 255
     [self computeLookUpTable16];
     
+    //把灰阶数据转成bitmap图像
     [self createImage16];
 }
 

@@ -53,7 +53,7 @@ CGPoint sumTrans;
 CGPoint sumTransInView;
 // KSViewController PrivateMethods
 // 
-@interface KSViewController(PrivateMethods)
+@interface KSViewController()
 
 - (void) decodeAndDisplay:(NSString *)path;
 - (void) displayWith:(NSInteger)windowWidth windowCenter:(NSInteger)windowCenter;
@@ -65,8 +65,7 @@ CGPoint sumTransInView;
 //
 @implementation KSViewController
 
-@synthesize deckView = _deckView;
-@synthesize mainView = _mainView;
+
 
 @synthesize dicom2DView;
 @synthesize dicom2DView2;
@@ -74,8 +73,6 @@ CGPoint sumTransInView;
 @synthesize dicom2DView4;
 
 
-@synthesize backgroudView;
-//@synthesize scrollView;
 
 @synthesize patientName, modality, windowInfo, date;
 @synthesize viewIndicator;
@@ -84,8 +81,6 @@ CGPoint sumTransInView;
 @synthesize seg_indicator_Trans_or_WW_WL = _seg_indicator_Trans_or_WW_WL;
 @synthesize switch_indicator_Link_WW_WL = _switch_indicator_Link_WW_WL;
 
-@synthesize SingleTap = _SingleTap;
-@synthesize DoubleTap = _DoubleTap;
 
 @synthesize centerPoint = _centerPoint;
 //@synthesize sysView;
@@ -167,7 +162,6 @@ int orgx,orgy;
 		if (progressView.progress > 1.0 || progressView.progress == 1.0) 
 		{
 			[progressAlert dismissWithClickedButtonIndex:0 animated:YES];
-			[progressAlert release];
 			progressAlert = NULL;
 		}
 		else 
@@ -180,27 +174,25 @@ int orgx,orgy;
 
 - (void)updateProgressBar:(NSString *)progress{
     UIProgressView *progressView = (UIProgressView *)[progressAlert viewWithTag:kTagOfProgressView];
-    UILabel *label = (UIProgressView *)[progressAlert viewWithTag:kTagOfLabelInView];
+    //UILabel *label = (UIProgressView *)[progressAlert viewWithTag:kTagOfLabelInView];
     
     if (progressView != nil) 
 	{
 		if (progressView.progress > 1.0 || progressView.progress == 1.0) 
 		{
             [progressAlert dismissWithClickedButtonIndex:0 animated:YES];
-			[progressAlert release];
 			progressAlert = NULL;
 		}
 	}
 
     progressView.progress = [progress floatValue];
-    
+    UILabel *label;
     [label setText:[NSString stringWithFormat:@"%d /%d",(int)([progress floatValue]*Documents_Num), Documents_Num]];
 
 }
 
 #pragma mark sub thread
 - (void)loading{
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
        
     NSLog(@"Data Slices Reading....");
@@ -208,7 +200,7 @@ int orgx,orgy;
     NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSArray *fileNameArray = [fm directoryContentsAtPath:documentsDirectory];
+    NSMutableArray *fileNameArray = [[fm directoryContentsAtPath:documentsDirectory] mutableCopy];
     
     for (NSString * content in fileNameArray) {
         //Delete useless file
@@ -256,11 +248,9 @@ int orgx,orgy;
    
     //
     [progressAlert dismissWithClickedButtonIndex:0 animated:YES];
-    [progressAlert release];
     progressAlert = NULL;
     
 	
-	[pool release];
 }
 
 
@@ -277,7 +267,17 @@ int orgx,orgy;
     [NSThread detachNewThreadSelector:@selector(loading) toTarget:self withObject:nil];
     
 }
- 
+
+- (IBAction)reDownLoadFromServer:(id)sender {
+    [self showPlainTextAlertView:self];
+}
+
+- (IBAction)switch_Link_WW_WL:(UISwitch *)sender {
+    
+}
+
+#pragma -mark create Plane View
+//XOY平面
 -(void)createXOYView:(int) Xslice WW_WL:(WW_And_WL)WW_WL
 {
     if (Xslice <= Documents_Num)
@@ -286,7 +286,7 @@ int orgx,orgy;
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSArray *fileNameArray = [fm directoryContentsAtPath:documentsDirectory];
+        NSArray *fileNameArray = [fm contentsOfDirectoryAtPath:documentsDirectory error:nil];
         
         if ([fileNameArray count] != 0) {
             NSString *s = [fileNameArray objectAtIndex:Xslice];
@@ -297,36 +297,15 @@ int orgx,orgy;
             NSLog(@"%@", appFile);
             //显示slider处的图像
             
-            [dicomDecoder setDicomFilename:appFile];
-            
-            //解析出patient's 信息
-            NSString * info = [dicomDecoder infoFor:PATIENT_NAME];
-            self.patientName.text = [NSString stringWithFormat:@"Patient: %@", info];
-            
-            info = [dicomDecoder infoFor:MODALITY];
-            self.modality.text = [NSString stringWithFormat:@"Modality: %@", info];
-            
-            info = [dicomDecoder infoFor:SERIES_DATE];
-            self.date.text = info;
-            
-            info = [NSString stringWithFormat:@"WW/WL: %d / %d", dicom2DView.winWidth, dicom2DView.winCenter];
-            self.windowInfo.text = info;
-            
+            [self decode:appFile];
             [self displayWith:WW_WL.WW windowCenter:WW_WL.WL];
-        }
-        else {
-            NSString * dicomPath = [[NSBundle mainBundle] pathForResource:@"14" ofType:nil ];
-            [self decodeAndDisplay:dicomPath];
-            //[self showPlainTextAlertView:self];
         }
         
     }
 }
 
-
-
 //YOZ平面 算法&绘制
--(void)createYOZView:(int) Xslice WW_WL:(WW_And_WL)WW_WL
+- (void)createYOZView:(int)Xslice WW_WL:(WW_And_WL)WW_WL
 {
     // 图像宽
     int imageWidth = dataSize_Y;
@@ -362,11 +341,8 @@ int orgx,orgy;
     NSString * info = [NSString stringWithFormat:@"WW/WL: %d / %d", dicom2DView2.winWidth, dicom2DView2.winCenter];
     self.windowInfo.text = info;
 
+    SAFE_FREE(sliceData);
 }
-
-
-
-
 
 
 //XOZ平面 算法&绘制
@@ -406,32 +382,58 @@ int orgx,orgy;
     NSString * info = [NSString stringWithFormat:@"WW/WL: %d / %d", dicom2DView3.winWidth, dicom2DView3.winCenter];
     self.windowInfo.text = info;
     
+    SAFE_FREE(sliceData);
 }
 
-
-
-- (IBAction)reDownLoadFromServer:(id)sender {
-    [self showPlainTextAlertView:self];
-}
-
-- (IBAction)switch_Link_WW_WL:(UISwitch *)sender {
+#pragma - mark slider - function
+//slider 滑动时 显示图像的函数
+- (void)valueChaged:(UISlider *)sender
+{
+    // 需要修改啊～～～～～～～～～～～对于slider的判断
+	int value= (int)sender.value ;
     
+	if (value!=slider.value)
+	{
+        if (Documents_Num!=0)
+        {
+            // XOY
+            if (chooseView == xoy) {
+                if (value < Documents_Num)
+                {
+                    [self createXOYView:value WW_WL:eachWW_WL[0]];
+                    sliderValues[0] = value;
+                }
+            }
+            // YOZ
+            if (chooseView == yoz)
+            {
+                if (value < dataSize_X) {
+                    [self createYOZView:value WW_WL:eachWW_WL[1]];
+                    sliderValues[1] = value;
+                }
+                
+            }
+            //XOZ
+            if (chooseView == xoz)
+            {
+                if (value < dataSize_Y) {
+                    [self createXOZView:value WW_WL:eachWW_WL[2]];
+                    sliderValues[2] = value;
+                }
+            }
+        }
+    }
 }
 
 
 
-
-#pragma mark -
 #pragma mark - Dicom slices to DataVolume
-//解析单幅图像
+//解析单幅图像, 图像数据出口
 - (ushort **) decodeAndReadOneSliceData:(NSString *) path
 {
-    [dicomDecoder release];
-    dicomDecoder = [[KSDicomDecoder alloc] init];
-    [dicomDecoder setDicomFilename:path];
+    [self decode:path];
     if (!dicomDecoder.dicomFound || !dicomDecoder.dicomFileReadSuccess) 
     {
-        [dicomDecoder release];
         dicomDecoder = nil;
         return nil;
     }
@@ -443,16 +445,16 @@ int orgx,orgy;
     NSInteger imageWidth      = dicomDecoder.width;
     NSInteger imageHeight     = dicomDecoder.height;
     
-    ushort * pixels16 = [dicomDecoder getPixels16];       
+    //获得解析过的图像数据，一维
+    ushort * pixels16 = [dicomDecoder getPixels16];
     
+    //申请空间
     ushort ** sliceData = (ushort **)calloc(imageHeight, sizeof(ushort *));
-    
-    
-    int i,j;
-    for (i=0; i<imageHeight; i++)
+    for (int i=0; i<imageHeight; i++)
         sliceData[i]= (ushort *)calloc(imageWidth, sizeof(ushort));
-   
-
+    
+    //一维转二维
+    int i,j;
     for (i=0;i<imageHeight;i++)
 		for (j=0;j<imageWidth;j++)
 			sliceData[i][j] = pixels16[  (i * imageWidth) + j];
@@ -461,49 +463,6 @@ int orgx,orgy;
 }
 
 
-- (void)valueChaged:(id)sender
-{
-    
-    // 需要修改啊～～～～～～～～～～～对于slider的判断
-	UISlider *mySlider = sender;
-	int value= (int) mySlider.value ;
-    
-    
-	if (value!=slider.value)
-	{
-        if (Documents_Num!=0)
-        {            
-            // XOY
-            if (chooseView == xoy) {
-                if (value < Documents_Num)
-                {
-                    [self createXOYView:value WW_WL:eachWW_WL[0]];
-                    sliderValues[0] = value;
-                }
-            }
-            
-            // YOZ
-            if (chooseView == yoz)
-            {
-                if (value < dataSize_X) {
-                    [self createYOZView:value WW_WL:eachWW_WL[1]];
-                    sliderValues[1] = value;
-                }
-                
-            }
-            
-            
-            //XOZ
-            if (chooseView == xoz)
-            {
-                if (value<dataSize_Y) {
-                    [self createXOZView:value WW_WL:eachWW_WL[2]];
-                    sliderValues[2] = value;
-                }
-            }
-        }
-    }
-}
 
 
 
@@ -513,17 +472,7 @@ int orgx,orgy;
 
 - (void) dealloc
 {
-
-
-    [_SingleTap release];
-    [_DoubleTap release];
-    [_seg_indicator_Trans_or_WW_WL release];
-    [_switch_indicator_Link_WW_WL release];
-    [viewIndicator release];
-    [super dealloc];
-    
-    //self.scrollView = nil;
-    self.backgroudView = nil;
+    scrollView = nil;
     self.dicom2DView = nil;
     self.dicom2DView2 = nil;
     self.dicom2DView3 = nil;
@@ -533,73 +482,24 @@ int orgx,orgy;
     self.modality = nil;
     self.windowInfo = nil;
     self.date = nil;
-    
-
-    [dicomDecoder release];
-    [panGesture release];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Do any additional setup after loading the view, typically from a nib.
-    
- 
-    
-//    self.deckView = [[DeckView alloc] init];
-//    self.deckView = CGRectMake(0, 0, width, height);
-//    [self.view addSubview:deckView];
-//    
-//    mainView = [[MainView alloc] init];
-//    mainView.frame = CGRectMake(0, 0, width, height);
-//    [self.view addSubview:mainView];
 
-    
-    //read images from the Documents
-    //in this method, decodeAndDisplay was called with the parameter: the first image's path
-    [self cpTestData2DocDir];
-
-    
-//    // decode and display dicom @"dcm"
-//    NSString * info = [dicomDecoder infoFor:PATIENT_NAME];
-//    self.patientName.text = [NSString stringWithFormat:@"Patient: %@", info];
-//    
-//    info = [dicomDecoder infoFor:MODALITY];
-//    self.modality.text = [NSString stringWithFormat:@"Modality: %@", info];
-//    
-//    info = [dicomDecoder infoFor:SERIES_DATE];
-//    self.date.text = info;
-//    
-//    info = [NSString stringWithFormat:@"WW/WL: %d / %d", dicom2DView.winWidth, dicom2DView.winCenter];
-//    self.windowInfo.text = info;
-    
-    // Add gesture
-//    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc]
-//                                              initWithTarget:self
-//                                              action:@selector(handlePinchGesture:)];
-//    [dicom2DView addGestureRecognizer:pinchGesture];
-
-
-//    
-//    // 关键在这一行，如果双击确定偵測失败才會触发单击
-//    [_SingleTap requireGestureRecognizerToFail:_DoubleTap];
-
-
-    
-    
-    //添加slider动作
-    [slider addTarget:self action:@selector(valueChaged:) forControlEvents:UIControlEventValueChanged];
-    
+    //read files from document path
+    [self readDicomDataFromDocDir];
+  
+    //initlize the UIElement
     [self initParameter];
     
-    
-    self.viewIndicator.text = @"Axial";
-    
-    ViewView = [[UIImageView alloc] initWithImage:dicom2DView.dicomImage];
+    self.viewIndicator.text = @"Tap to choose one Plane";
 }
 
 - (void)initParameter {
+    //添加slider动作
+    [slider addTarget:self action:@selector(valueChaged:) forControlEvents:UIControlEventValueChanged];
     //初始化slider对象属性， min，max， init位置
     slider.minimumValue = 1;
 	slider.maximumValue = Documents_Num;
@@ -608,15 +508,18 @@ int orgx,orgy;
         sliderValues[i] = slider.value;
     }
     
-    NSLog(@"%d",Documents_Num);
-    // NSLog([fileNameArray objectAtIndex:0]);
+    //设置Labels, 按tag提取 信息
+    NSString * info;
+    info = [dicomDecoder infoFor:PATIENT_NAME];
+    self.patientName.text = [NSString stringWithFormat:@"Patient: %@", info];
+    info = [dicomDecoder infoFor:MODALITY];
+    self.modality.text = [NSString stringWithFormat:@"Modality: %@", info];
+    info = [dicomDecoder infoFor:SERIES_DATE];
+    self.date.text = info;
     
-    
-    //which view is in big mode
+    //设置各个view
     viewInBigMode = none;
     chooseView = xoy;
-    
-    
     
     eachWW_WL[0].WW = dicomDecoder.windowWidth;
     eachWW_WL[0].WL = dicomDecoder.windowCenter;
@@ -625,13 +528,16 @@ int orgx,orgy;
     [self createYOZView:sliderValues[1] WW_WL:eachWW_WL[1]];
     [self createXOZView:sliderValues[2] WW_WL:eachWW_WL[2]];
     [self createXOYView:sliderValues[0] WW_WL:eachWW_WL[0]];
-    
-    self.centerPoint = CGPointMake(0, 0);
-    //self.centerPoint = CGPointMake(self.mainView.frame.size.width / 2, self.mainView.frame.size.height / 2);
-    sumTrans = CGPointMake(0, 0);
-    sumTransInView = CGPointMake(0, 0);
+   
+    //记录Axical view的左上座标作为 bigViewMode 的 左上座标
     scrollViewOriginPoint = CGPointMake(dicom2DView.frame.origin.x, dicom2DView.frame.origin.y);
 
+    //parameter for main pan
+    sumTrans = CGPointMake(0, 0);
+    sumTransInView = CGPointMake(0, 0);
+    
+    //it seems i do not use it
+    self.centerPoint = CGPointMake(0, 0);
 }
 
 
@@ -639,57 +545,26 @@ int orgx,orgy;
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    
-//    [dicom2DView removeGestureRecognizer:panGesture];
-//    [dicom2DView2 removeGestureRecognizer:panGesture];
-//    [dicom2DView3 removeGestureRecognizer:panGesture];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-    } else {
-        return YES;
-    }
 }
 
 // 读取Documents里的文件
-- (void)cpTestData2DocDir {
-//    NSFileManager *fm = [NSFileManager defaultManager];
-//    
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = [paths objectAtIndex:0];
-//    NSArray *tmpfileNameArray = [fm subpathsAtPath:documentsDirectory];
-//    NSLog(@"%@", tmpfileNameArray);
-//    
-//    NSMutableArray *fileNameArray = [tmpfileNameArray mutableCopy];
-//    
-//    for (NSString *content in fileNameArray) {
-//        //Delete useless file
-//        if ([content isEqual:@".DS_Store"]) {
-//            NSError *error;
-//            if (![fm removeItemAtPath:content error:&error]) {
-//                NSLog(@"Remove Error: %@", [error localizedDescription]);
-//                return;
-//            }
-//            [fileNameArray removeObject:content];
-//            
-//        } else {
-//            continue;
-//        }
-//    }
+- (void)readDicomDataFromDocDir {
     
     NSFileManager *fm = [NSFileManager defaultManager];
     //get document's path
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    //get the files's name, save in an array
-    NSArray *fileNameArray = [fm directoryContentsAtPath:documentsDirectory];
     
+    NSLog(@"Document Path: %@", documentsDirectory);
+    //get the files's name, save in an array
+    NSError *error = nil;
+    NSMutableArray *fileNameArray = [[fm contentsOfDirectoryAtPath:documentsDirectory error:&error] mutableCopy];
+    if (error) {
+        NSLog(@"read files error: %@", [error localizedDescription]);
+    }
+    
+    //Delete useless file
     for (NSString * content in fileNameArray) {
-        //Delete useless file
         if ([content isEqual:@".DS_Store"]) {
             [fileNameArray removeObject:content];
             break;
@@ -697,7 +572,6 @@ int orgx,orgy;
     }
     
     dataSize_Z = Documents_Num = [fileNameArray count];
-    
     //为图像数据体申请空间
     imagesVolume = (ushort ***)calloc(Documents_Num, sizeof(ushort **));
     
@@ -705,49 +579,40 @@ int orgx,orgy;
         //遍历，生成 图像数据体
         for (int i=0; i<[fileNameArray count]; i++)
         {
-            NSString *s = [fileNameArray objectAtIndex:i];
-            
-            NSString *appFile= [documentsDirectory stringByAppendingPathComponent:s];
-            NSLog(@"appfile is coming");
-            NSLog(@"%@",appFile);
-            
-            imagesVolume[i] = [self decodeAndReadOneSliceData:appFile];
-            
+            NSString *fileName = [fileNameArray objectAtIndex:i];
+            NSString *absolutePathOfFile = [documentsDirectory stringByAppendingPathComponent:fileName];
+            imagesVolume[i] = [self decodeAndReadOneSliceData:absolutePathOfFile];
         }
         flag_data_read=true;
         
-        NSString *s = [fileNameArray objectAtIndex:20];
-        NSString *appFile= [documentsDirectory stringByAppendingPathComponent:s];
-        NSLog(@"%@", appFile);
-        
-        [self decode:appFile];
-        
-        
-        
+        //choose one to get the head info
+        NSString *ap= [documentsDirectory stringByAppendingPathComponent:[fileNameArray firstObject]];
+        [self decode:ap];
     }
     else {
-        NSString * dicomPath = [[NSBundle mainBundle] pathForResource:@"14" ofType:nil ];
+        NSString *dicomPath = [[NSBundle mainBundle] pathForResource:@"14" ofType:nil ];
         [self decodeAndDisplay:dicomPath];
-        //[self showPlainTextAlertView:self];
+        
+        self.viewIndicator.text = @"No Dicoms in Document";
     }
 }
 
 
 #pragma mark -
 #pragma mark - Dicom View Display
+//获取DICOM数据，解析
 - (void) decode:(NSString *)path
 {
-    [dicomDecoder release];
-    dicomDecoder = [[KSDicomDecoder alloc] init];
+    if (!dicomDecoder) {
+        dicomDecoder = [[KSDicomDecoder alloc] init];
+    }
     [dicomDecoder setDicomFilename:path];
 
 }
-
+//获取DICOM数据，解析并生成图像
 - (void) decodeAndDisplay:(NSString *)path
 {        
-    [dicomDecoder release];
-    dicomDecoder = [[KSDicomDecoder alloc] init];
-    [dicomDecoder setDicomFilename:path];
+    [self decode:path];
     [self displayWith:dicomDecoder.windowWidth windowCenter:dicomDecoder.windowCenter];
 }
 
@@ -755,7 +620,6 @@ int orgx,orgy;
 {
     if (!dicomDecoder.dicomFound || !dicomDecoder.dicomFileReadSuccess) 
     {
-        [dicomDecoder release];
         dicomDecoder = nil;
         return;
     }
@@ -807,8 +671,10 @@ int orgx,orgy;
     
     if (samplesPerPixel == 1 && bitDepth == 16)
     {
+        //获取图像数据（一维）from Decoder
         ushort * pixels16 = [dicomDecoder getPixels16];
         
+        //如果窗宽窗位没有设置，遍历，找到max，min（说明图像数据里存储的是灰度信息), 计算出窗宽、窗位
         if (winWidth == 0 || winCenter == 0)
         {
             ushort max = 0, min = 65535;
@@ -823,14 +689,14 @@ int orgx,orgy;
                     min = pixels16[i];
                 }
             }
-            
-            winWidth = (NSInteger)((max + min)/2.0 + 0.5);
-            winCenter = (NSInteger)((max - min)/2.0 + 0.5);
+            winWidth = (NSInteger)((max + min)/2.0 + 0.5); //中值
+            winCenter = (NSInteger)((max - min)/2.0 + 0.5); //中心距两端的距离
         }
         
+        //is the indicator of Pixel Representation(0028, 0103)
         dicom2DView.signed16Image = signedImage;
 
-        
+        //把数据交给view，生成bitmap图像
         [dicom2DView setPixels16:pixels16
                            width:imageWidth
                           height:imageHeight
@@ -839,7 +705,7 @@ int orgx,orgy;
                  samplesPerPixel:samplesPerPixel
                      resetScroll:YES];
         
-        
+        //重绘
         needsDisplay = YES;
         NSLog(@"set Pixel 16");
     }
@@ -887,13 +753,11 @@ int orgx,orgy;
         orgx=x;
         orgy=y;
 
-        
         dicom2DView.frame = CGRectMake(self.dicom2DView.frame.origin.x, self.dicom2DView.frame.origin.y, self.dicom2DView.frame.size.width, self.dicom2DView.frame.size.height);
 
         [dicom2DView setNeedsDisplay];
 
-        
-        
+        //更新 WW/WL Label
         NSString * info = [NSString stringWithFormat:@"WW/WL: %d / %d", dicom2DView.winWidth, dicom2DView.winCenter];
         self.windowInfo.text = info;
     }
@@ -903,90 +767,41 @@ int orgx,orgy;
 #pragma mark -
 #pragma mark - Gesture
 
-//PanGesture for adjust WW/WL
-//-(IBAction) handlePanGestureToAdjustWWandWL:(UIPanGestureRecognizer *) sender
-//{
-//    UIGestureRecognizerState state = [sender state];
-//    
-//    if (state == UIGestureRecognizerStateBegan)
-//    {
-//        prevTransform = dicom2DView.transform;
-//        startPoint = [sender locationInView:self.view];
-//    }
-//    else if (state == UIGestureRecognizerStateChanged || state == UIGestureRecognizerStateEnded)
-//    {
-//        
-//        CGPoint location    = [sender locationInView:self.view];
-//        CGFloat offsetX     = location.x - startPoint.x;
-//        CGFloat offsetY     = location.y - startPoint.y;
-//        startPoint          = location;
-//        
-//#if 0   
-//        // translate
-//        //
-//        CGAffineTransform translate = CGAffineTransformMakeTranslation(offsetX, offsetY);
-//        dicom2DView.transform  = CGAffineTransformConcat(prevTransform, translate);
-//#else
-//        // adjust window width/level
-//        //
-//        dicom2DView.winWidth  += offsetX * dicom2DView.changeValWidth;
-//        dicom2DView.winCenter += offsetY * dicom2DView.changeValCentre;
-//        
-//        if (dicom2DView.winWidth <= 0) {
-//            dicom2DView.winWidth = 1;
-//        }
-//        
-//        if (dicom2DView.winCenter == 0) {
-//            dicom2DView.winCenter = 1;
-//        }
-//        
-//        if (dicom2DView.signed16Image) {
-//            dicom2DView.winCenter += SHRT_MIN;
-//        }
-//        
-//        [dicom2DView setWinWidth:dicom2DView.winWidth];
-//        [dicom2DView setWinCenter:dicom2DView.winCenter];
-//        //[dicom2DView setNeedsDisplay];
-//        
-//        [self displayWith:dicom2DView.winWidth windowCenter:dicom2DView.winCenter];
-//        
-//#endif
-//    }
-//}
+
 
 
 #pragma mark gesture
 - (IBAction)handleMainViewPan:(UIPanGestureRecognizer *)recognizer {
-
-//    
-//    CGPoint translation = [recognizer translationInView:self.view];
-//    sumTrans.x += translation.x;
-//    if (sumTrans.x > MAX_CENTER_Trans_X) {
-//        sumTrans.x = MAX_CENTER_Trans_X;
-//    }
-//    if (sumTrans.x < 0) {
-//        sumTrans.x = 0;
-//    }
-//    recognizer.view.center = CGPointMake(self.view.center.x + sumTrans.x, recognizer.view.center.y);
-//    NSLog(@"%f", sumTrans.x);
-//    if (recognizer.state == UIGestureRecognizerStateEnded) {
-//        
-//        [UIView animateWithDuration:0.2 animations:^(void){
-//            
-//            if (sumTrans.x > threshold_Trans_X) {
-//                recognizer.view.center = CGPointMake(self.view.center.x + MAX_CENTER_Trans_X, recognizer.view.center.y);
-//                sumTrans.x = MAX_CENTER_Trans_X;
-//            }else{
-//                recognizer.view.center = CGPointMake(self.view.center.x, recognizer.view.center.y);
-//                sumTrans.x = 0;
-//            }
-//            
-//        }];
-//        
-//        
-//    }
-//    
-//    [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
+    
+    //
+    //    CGPoint translation = [recognizer translationInView:self.view];
+    //    sumTrans.x += translation.x;
+    //    if (sumTrans.x > MAX_CENTER_Trans_X) {
+    //        sumTrans.x = MAX_CENTER_Trans_X;
+    //    }
+    //    if (sumTrans.x < 0) {
+    //        sumTrans.x = 0;
+    //    }
+    //    recognizer.view.center = CGPointMake(self.view.center.x + sumTrans.x, recognizer.view.center.y);
+    //    NSLog(@"%f", sumTrans.x);
+    //    if (recognizer.state == UIGestureRecognizerStateEnded) {
+    //
+    //        [UIView animateWithDuration:0.2 animations:^(void){
+    //
+    //            if (sumTrans.x > threshold_Trans_X) {
+    //                recognizer.view.center = CGPointMake(self.view.center.x + MAX_CENTER_Trans_X, recognizer.view.center.y);
+    //                sumTrans.x = MAX_CENTER_Trans_X;
+    //            }else{
+    //                recognizer.view.center = CGPointMake(self.view.center.x, recognizer.view.center.y);
+    //                sumTrans.x = 0;
+    //            }
+    //
+    //        }];
+    //
+    //        
+    //    }
+    //    
+    //    [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
 }
 #pragma mark xoy-gesture
 - (void)slowingEffect:(UIPanGestureRecognizer *)recognizer {
@@ -1223,35 +1038,20 @@ int orgx,orgy;
     scrollView.delegate = self;
     scrollView.bounces = true;
     scrollView.bouncesZoom = true;
-    [self.mainView addSubview:scrollView];
- 
+    
+    [mainView addSubview:scrollView];
 }
 
 - (void)RemoveScrollView: (UITapGestureRecognizer *)sender {
     [sender.view removeFromSuperview];
-    [self.mainView addSubview:sender.view];
     [scrollView removeFromSuperview];
-    scrollView = NULL;
+    scrollView = nil;
+    [mainView addSubview:sender.view];
 }
 
 
 
-- (UIView *)viewForZoomingInScrollView:(UIScrollView *)sender {
-//    switch (chooseView) {
-//        case xoy:
-//            return dicom2DView;
-//            break;
-//        case yoz:
-//            return dicom2DView2;
-//            break;
-//        case xoz:
-//            return dicom2DView3;
-//            break;
-//        default:
-//            break;
-//    }
-    return ViewView;
-}
+
 
 - (IBAction)handleDoubleTap:(UITapGestureRecognizer *)sender {
     //double tap to double size
@@ -1362,8 +1162,6 @@ int orgx,orgy;
     self.viewIndicator.text = @"Coronal";
 
     [self createXOZView:sliderValues[2] WW_WL:eachWW_WL[2]];
-
-
 }
 
 - (IBAction)handleXOZViewLongPress:(UILongPressGestureRecognizer *)sender {
@@ -1371,57 +1169,7 @@ int orgx,orgy;
     [self seg_indicator_Trans_or_WW_WL].selectedSegmentIndex = 1;
 }
 
-//- (void)handlerPanGesture:(UIPanGestureRecognizer *)recognizer
-//{
-//    if ((recognizer.state == UIGestureRecognizerStateBegan) ||
-//        (recognizer.state == UIGestureRecognizerStateChanged))
-//    {
-//        CGPoint offset = [recognizer translationInView:self.dicom2DView];
-//        CGRect frame = self.dicom2DView.frame;
-//        frame.origin.x += offset.x;
-//        frame.origin.y += offset.y;
-//        //if (frame.origin.x >= 0 && frame.origin.x <= 360)
-//        //{
-//            self.dicom2DView.frame = frame;
-//        //}
-//        [self.view bringSubviewToFront:dicom2DView];
-//        [recognizer setTranslation:CGPointZero inView:self.dicom2DView];
-//        
-////        CGPoint offset2 = [recognizer translationInView:self.dicom2DView2];
-////        CGRect frame2 = self.dicom2DView2.frame;
-////        frame2.origin.x += offset2.x;
-////        frame2.origin.y += offset2.y;
-////        //if (frame.origin.x >= 0 && frame.origin.x <= 360)
-////        //{
-////        self.dicom2DView2.frame = frame2;
-////        //}
-////        [self.view bringSubviewToFront:dicom2DView2];
-////        [recognizer setTranslation:CGPointZero inView:self.dicom2DView2];
-//
-//    }
-////    else if (recognizer.state == UIGestureRecognizerStateEnded)
-////    {
-//////        BOOL isVisible = self.rightViewController.view.frame.origin.x < kScreenWidth / 2;
-////        [self.dicom2DView setNeedsDisplay];
-////        
-////    }
-//    
-////    CGPoint translation = [(UIPanGestureRecognizer *) sender translationInView:dicom2DView];
-////    
-////
-////    NSLog(@"netTranslation: %f, %f", netTranslation.x, netTranslation.y);
-////    
-////    //if (Manipulation == @"Transform") {
-////        sender.view.transform = CGAffineTransformMakeTranslation(
-////                                                                 netTranslation.x + translation.x,
-////                                                                 netTranslation.y + translation.y);
-////        if (sender.state == UIGestureRecognizerStateEnded) {
-////            netTranslation.x += translation.x;
-////            netTranslation.y += translation.y;
-////        }
-//    
-//    
-//}
+
 
 
 /////////////////////////add by Xutq///////////////
@@ -1432,7 +1180,7 @@ int orgx,orgy;
 {
     CGPoint translation = [(UIPanGestureRecognizer *) sender translationInView:dicom2DView];
     
-    if (Manipulation == @"Transform") {
+    if ([Manipulation  isEqual: @"Transform"]) {
         sender.view.transform = CGAffineTransformMakeTranslation(
                                                                  netTranslation.x + translation.x,
                                                                  netTranslation.y + translation.y);
@@ -1449,7 +1197,6 @@ int orgx,orgy;
 - (IBAction)handlePinchGesture:(UIPinchGestureRecognizer *)sender
 {
     if (sender.state == UIGestureRecognizerStateChanged || sender.state == UIGestureRecognizerStateEnded) {
-        [self backgroudView].scale *= sender.scale;
         [self dicom2DView].scale *= sender.scale;
         sender.scale = 1;
     }
@@ -1492,7 +1239,6 @@ int orgx,orgy;
 
 #pragma mark - network part
 - (void)connectToServerUsingSocket:(NSArray *)ipAndPort {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     //remove the files first
     NSFileManager *fm = [NSFileManager defaultManager];
@@ -1623,11 +1369,9 @@ int orgx,orgy;
     Documents_Num = 0;
     
     [progressAlert dismissWithClickedButtonIndex:0 animated:YES];
-    [progressAlert release];
     progressAlert = NULL;
     
     
-    [pool release];
     [self performSelectorOnMainThread:@selector(btnDataRead:) withObject:nil waitUntilDone:NO];
 
     [NSThread exit];

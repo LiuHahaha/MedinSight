@@ -7,23 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MBProgressHUD.h"
-#import "BackgrandView.h"
 #import "MainView.h"
 #import "DeckView.h"
 
 @class KSDicom2DView;
 @class KSDicomDecoder;
 
-@class BackgrandView;
 @class DeckView;
 @class MainView;
-
 
 @interface KSViewController : UIViewController <UIAlertViewDelegate, UIScrollViewDelegate>
 {
     DeckView *deckView;
     MainView *mainView;
+    
     
     KSDicom2DView   *dicom2DView;
     KSDicom2DView   *dicom2DView2;
@@ -32,7 +29,6 @@
     
     KSDicomDecoder  *dicomDecoder;
     
-    BackgrandView   *backgroudView;
     
     UILabel * patientName;
     UILabel * modality;
@@ -54,25 +50,22 @@
     
 }
 
-@property (nonatomic, retain) IBOutlet DeckView *deckView;
-@property (nonatomic, retain) IBOutlet MainView *mainView;
 
+//Outlet - View
 @property (nonatomic, retain) IBOutlet KSDicom2DView *dicom2DView;
 @property (retain, nonatomic) IBOutlet KSDicom2DView *dicom2DView2;
 @property (retain, nonatomic) IBOutlet KSDicom2DView *dicom2DView3;
 @property (retain, nonatomic) IBOutlet KSDicom2DView *dicom2DView4;
 
 
-@property (retain, nonatomic) IBOutlet BackgrandView *backgroudView;
-
-//@property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
+//Outlet - Label
+@property (retain, nonatomic) IBOutlet UILabel *viewIndicator;
 
 @property (nonatomic, retain) IBOutlet UILabel * patientName;
 @property (nonatomic, retain) IBOutlet UILabel * modality;
 @property (nonatomic, retain) IBOutlet UILabel * windowInfo;
 @property (nonatomic, retain) IBOutlet UILabel * date;
 
-@property (retain, nonatomic) IBOutlet UILabel *viewIndicator;
 
 @property (nonatomic, retain) UISlider *slider;
 @property (nonatomic, retain) UIButton *btnDataRead;
