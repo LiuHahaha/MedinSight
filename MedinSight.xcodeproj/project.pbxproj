@@ -16,6 +16,11 @@
 		35B058FF18BECC2100518A97 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B058FD18BECC2100518A97 /* MainView.m */; };
 		35B0590318BF127B00518A97 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B0590218BF127B00518A97 /* Images.xcassets */; };
 		35B0590618C0117D00518A97 /* DicomPixelsConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B0590518C0117D00518A97 /* DicomPixelsConverter.m */; };
+		35B0590818C0248F00518A97 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B0590718C0248F00518A97 /* GLKit.framework */; };
+		35B0590A18C0249700518A97 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B0590918C0249700518A97 /* OpenGLES.framework */; };
+		35B0590C18C024A000518A97 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B0590B18C024A000518A97 /* QuartzCore.framework */; };
+		35B0591518C0303C00518A97 /* ThrDReViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B0591418C0303C00518A97 /* ThrDReViewController.m */; };
+		35B0591818C0AFF200518A97 /* MarchingCubeFuntion.mm in Sources */ = {isa = PBXBuildFile; fileRef = 35B0591718C0AFF200518A97 /* MarchingCubeFuntion.mm */; };
 		E3AF4A0F14AD90C100158E33 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3AF4A0E14AD90C100158E33 /* UIKit.framework */; };
 		E3AF4A1114AD90C100158E33 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3AF4A1014AD90C100158E33 /* Foundation.framework */; };
 		E3AF4A1314AD90C100158E33 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3AF4A1214AD90C100158E33 /* CoreGraphics.framework */; };
@@ -44,6 +49,14 @@
 		35B0590218BF127B00518A97 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		35B0590418C0117D00518A97 /* DicomPixelsConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DicomPixelsConverter.h; sourceTree = "<group>"; };
 		35B0590518C0117D00518A97 /* DicomPixelsConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DicomPixelsConverter.m; sourceTree = "<group>"; };
+		35B0590718C0248F00518A97 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		35B0590918C0249700518A97 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		35B0590B18C024A000518A97 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		35B0591318C0303C00518A97 /* ThrDReViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThrDReViewController.h; sourceTree = "<group>"; };
+		35B0591418C0303C00518A97 /* ThrDReViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThrDReViewController.m; sourceTree = "<group>"; };
+		35B0591618C0AFF200518A97 /* MarchingCubeFuntion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarchingCubeFuntion.h; sourceTree = "<group>"; };
+		35B0591718C0AFF200518A97 /* MarchingCubeFuntion.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarchingCubeFuntion.mm; sourceTree = "<group>"; };
+		35B0591918C1C37C00518A97 /* MCLookUpTable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLookUpTable.h; sourceTree = "<group>"; };
 		E3AF4A0A14AD90C100158E33 /* MedinSight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MedinSight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3AF4A0E14AD90C100158E33 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E3AF4A1014AD90C100158E33 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -72,6 +85,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35B0590C18C024A000518A97 /* QuartzCore.framework in Frameworks */,
+				35B0590A18C0249700518A97 /* OpenGLES.framework in Frameworks */,
+				35B0590818C0248F00518A97 /* GLKit.framework in Frameworks */,
 				E3AF4A0F14AD90C100158E33 /* UIKit.framework in Frameworks */,
 				E3AF4A1114AD90C100158E33 /* Foundation.framework in Frameworks */,
 				E3AF4A1314AD90C100158E33 /* CoreGraphics.framework in Frameworks */,
@@ -114,6 +130,9 @@
 		E3AF4A0D14AD90C100158E33 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				35B0590B18C024A000518A97 /* QuartzCore.framework */,
+				35B0590918C0249700518A97 /* OpenGLES.framework */,
+				35B0590718C0248F00518A97 /* GLKit.framework */,
 				E3AF4A0E14AD90C100158E33 /* UIKit.framework */,
 				E3AF4A1014AD90C100158E33 /* Foundation.framework */,
 				E3AF4A1214AD90C100158E33 /* CoreGraphics.framework */,
@@ -158,6 +177,11 @@
 		E3AF4A2F14AD90D000158E33 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				35B0591318C0303C00518A97 /* ThrDReViewController.h */,
+				35B0591418C0303C00518A97 /* ThrDReViewController.m */,
+				35B0591618C0AFF200518A97 /* MarchingCubeFuntion.h */,
+				35B0591718C0AFF200518A97 /* MarchingCubeFuntion.mm */,
+				35B0591918C1C37C00518A97 /* MCLookUpTable.h */,
 				00A0EE1317695A6F003BD348 /* View */,
 				E3AF4A3214AD913C00158E33 /* Dicom */,
 				E3AF4A3114AD911100158E33 /* Controller */,
@@ -290,9 +314,11 @@
 				E3AF4A1B14AD90C100158E33 /* main.m in Sources */,
 				E3AF4A1F14AD90C100158E33 /* KSAppDelegate.m in Sources */,
 				E3AF4A2814AD90C100158E33 /* KSViewController.m in Sources */,
+				35B0591518C0303C00518A97 /* ThrDReViewController.m in Sources */,
 				E3AF4A5614AD953A00158E33 /* KSDicomDecoder.mm in Sources */,
 				35B058FE18BECC2100518A97 /* DeckView.m in Sources */,
 				35B0590618C0117D00518A97 /* DicomPixelsConverter.m in Sources */,
+				35B0591818C0AFF200518A97 /* MarchingCubeFuntion.mm in Sources */,
 				35B058FF18BECC2100518A97 /* MainView.m in Sources */,
 				E3AF4A5714AD953A00158E33 /* KSDicomDictionary.m in Sources */,
 				E3AF4A5814AD953A00158E33 /* KSDicom2DView.m in Sources */,

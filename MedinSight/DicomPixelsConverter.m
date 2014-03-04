@@ -57,10 +57,10 @@
     //根据参数重置winMax, winMin
     [self resetValues];
     
-    //建立查找表，把 winMin ~ winMax 灰度 映射到 0 ~ 255
+    //建立查找表，用于把 winMin ~ winMax 灰度 映射到 0 ~ 255
     [self computeLookUpTable16];
     
-    //把灰阶数据转成bitmap图像
+    //用lub16转换dicom imageData
     imageData = [self createImageData16];
     
     return imageData;

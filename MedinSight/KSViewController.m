@@ -9,6 +9,8 @@
 #import "KSViewController.h"
 #import "KSDicom2DView.h"
 #import "KSDicomDecoder.h"
+#import "DicomPixelsConverter.h"
+#import "ThrDReViewController.h"
 
 #include <netinet/in.h>
 #include <sys/types.h>
@@ -54,7 +56,20 @@ CGPoint sumTransInView;
 // KSViewController PrivateMethods
 // 
 @interface KSViewController()
+{
+    // 图像数据体
+    ushort *** imagesVolume;
+    Byte *** images256Volume;
+    
+    //
+    int orgx,orgy;
+    //
+    int dataSize_X;
+    int dataSize_Y;
+    int dataSize_Z;
 
+
+}
 - (void) decodeAndDisplay:(NSString *)path;
 - (void) displayWith:(NSInteger)windowWidth windowCenter:(NSInteger)windowCenter;
 - (ushort **) decodeAndReadOneSliceData:(NSString *) path;
@@ -64,8 +79,6 @@ CGPoint sumTransInView;
 // KSViewController @implementation
 //
 @implementation KSViewController
-
-
 
 @synthesize dicom2DView;
 @synthesize dicom2DView2;
@@ -87,14 +100,11 @@ CGPoint sumTransInView;
 
 
 int Documents_Num; //number of images
-//NSArray *fileNameArray;
-//NSString *documentsDirectory;
 
 NSString *Manipulation=@"WW/WL";
 
 
 /////////////////////////add by Xutq///////////////
-//@synthesize imageView;
 // ---pinching---1
 CGFloat lastScaleFactor = 1;
 // ---panning (or Dragging)---1
@@ -102,18 +112,23 @@ CGPoint netTranslation;
 
 /////////////////////////add end///////////////////
 
-int dataSize_X;
-int dataSize_Y;
-int dataSize_Z;
 
 bool flag_data_read=false;
 
 
-// 图像数据体
-ushort *** imagesVolume;
+#pragma mark - Segue
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"push2GLKView"]) {
+        if ([segue.destinationViewController isKindOfClass:[ThrDReViewController class]]) {
+            ThrDReViewController *tvc = (ThrDReViewController *)segue.destinationViewController;
+            tvc.images256Volume = images256Volume;
+            [tvc setVolumeSidesLengthWithHeight:dataSize_Z Length:dataSize_X Width:dataSize_Y];
+        }
+    }
+}
 
 
-int orgx,orgy;
 
 
 #pragma mark - PrivateMethods   alert View add ProgressView & Activity Indicator
@@ -200,7 +215,7 @@ int orgx,orgy;
     NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSMutableArray *fileNameArray = [[fm directoryContentsAtPath:documentsDirectory] mutableCopy];
+    NSMutableArray *fileNameArray = [[fm contentsOfDirectoryAtPath:documentsDirectory error:nil] mutableCopy];
     
     for (NSString * content in fileNameArray) {
         //Delete useless file
@@ -280,7 +295,7 @@ int orgx,orgy;
 //XOY平面
 -(void)createXOYView:(int) Xslice WW_WL:(WW_And_WL)WW_WL
 {
-    if (Xslice <= Documents_Num)
+/*    if (Xslice <= Documents_Num)
     {
         NSFileManager *fm = [NSFileManager defaultManager];
         
@@ -302,6 +317,43 @@ int orgx,orgy;
         }
         
     }
+*/
+
+    // 图像宽
+    int imageWidth = dataSize_X;
+    //图像高
+    int imageHeight = dataSize_Y;
+    
+    // 宽*高 一个slice图像总的像素个数
+    ushort * sliceData = (ushort *)calloc( imageWidth* imageHeight , sizeof(ushort));
+    
+    //图像高，  行数
+    for (int j=0; j<imageHeight; j++)
+        //图像宽 ， 列数
+        for(int i=0; i<imageWidth; i++)
+        {
+            sliceData[(j * imageWidth) + i]= imagesVolume [Xslice] [imageHeight-1-j] [i] ;
+        }
+    
+    dicom2DView.signed16Image = dicomDecoder.signedImage;
+    
+    [dicom2DView setPixels16:sliceData
+                       width:imageWidth
+                      height:imageHeight
+                 windowWidth:WW_WL.WW
+                windowCenter:WW_WL.WL
+             samplesPerPixel:1
+                 resetScroll:YES];
+    
+    
+    dicom2DView.frame = CGRectMake(self.dicom2DView.frame.origin.x, self.dicom2DView.frame.origin.y, self.dicom2DView.frame.size.width, self.dicom2DView.frame.size.width);
+    [dicom2DView setNeedsDisplay];
+    
+    NSString * info = [NSString stringWithFormat:@"WW/WL: %d / %d", dicom2DView.winWidth, dicom2DView.winCenter];
+    self.windowInfo.text = info;
+    
+    SAFE_FREE(sliceData);
+
 }
 
 //YOZ平面 算法&绘制
@@ -438,10 +490,6 @@ int orgx,orgy;
         return nil;
     }
     
-    dataSize_X =dicomDecoder.width;
-    dataSize_Y =dicomDecoder.height;
-
-    
     NSInteger imageWidth      = dicomDecoder.width;
     NSInteger imageHeight     = dicomDecoder.height;
     
@@ -462,6 +510,40 @@ int orgx,orgy;
     return sliceData;
 }
 
+- (Byte **) ConvertOneSliceData:(NSString *) path
+{
+    [self decode:path];
+    if (!dicomDecoder.dicomFound || !dicomDecoder.dicomFileReadSuccess)
+    {
+        dicomDecoder = nil;
+        return nil;
+    }
+    
+    NSInteger imageWidth      = dicomDecoder.width;
+    NSInteger imageHeight     = dicomDecoder.height;
+    
+    //获得解析过的图像数据，一维
+    DicomPixelsConverter *dicomPixelsConverter = [[DicomPixelsConverter alloc] init];
+
+    Byte *pixels16 = [dicomPixelsConverter setPixels16:[dicomDecoder getPixels16]
+                                                 width:imageWidth
+                                                height:imageHeight
+                                           windowWidth:dicomDecoder.windowWidth
+                                          windowCenter:dicomDecoder.windowCenter];
+    
+    //申请空间
+    Byte ** sliceData = (Byte **)calloc(imageHeight, sizeof(Byte *));
+    for (int i=0; i<imageHeight; i++)
+        sliceData[i]= (Byte *)calloc(imageWidth, sizeof(Byte));
+    
+    //一维转二维
+    int i,j;
+    for (i=0;i<imageHeight;i++)
+		for (j=0;j<imageWidth;j++)
+			sliceData[i][j] = pixels16[  (i * imageWidth) + j];
+    
+    return sliceData;
+}
 
 
 
@@ -476,7 +558,6 @@ int orgx,orgy;
     self.dicom2DView = nil;
     self.dicom2DView2 = nil;
     self.dicom2DView3 = nil;
-    self.dicom2DView4 = nil;
 
     self.patientName = nil;
     self.modality = nil;
@@ -545,6 +626,17 @@ int orgx,orgy;
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    SAFE_FREE(imagesVolume);
+    scrollView = nil;
+    self.dicom2DView = nil;
+    self.dicom2DView2 = nil;
+    self.dicom2DView3 = nil;
+    
+    self.patientName = nil;
+    self.modality = nil;
+    self.windowInfo = nil;
+    self.date = nil;
+    
 }
 
 // 读取Documents里的文件
@@ -571,9 +663,12 @@ int orgx,orgy;
         }
     }
     
-    dataSize_Z = Documents_Num = [fileNameArray count];
+    Documents_Num = [fileNameArray count];
     //为图像数据体申请空间
     imagesVolume = (ushort ***)calloc(Documents_Num, sizeof(ushort **));
+    images256Volume = (Byte ***)calloc(Documents_Num, sizeof(Byte **));
+
+
     
     if (Documents_Num!=0) { //如果Document目录下有文件
         //遍历，生成 图像数据体
@@ -582,12 +677,15 @@ int orgx,orgy;
             NSString *fileName = [fileNameArray objectAtIndex:i];
             NSString *absolutePathOfFile = [documentsDirectory stringByAppendingPathComponent:fileName];
             imagesVolume[i] = [self decodeAndReadOneSliceData:absolutePathOfFile];
+            images256Volume[i] = [self ConvertOneSliceData:absolutePathOfFile];
         }
         flag_data_read=true;
         
-        //choose one to get the head info
-        NSString *ap= [documentsDirectory stringByAppendingPathComponent:[fileNameArray firstObject]];
-        [self decode:ap];
+        //获取数据体的三维
+        dataSize_X =dicomDecoder.width;
+        dataSize_Y =dicomDecoder.height;
+        dataSize_Z = Documents_Num - 1;
+
     }
     else {
         NSString *dicomPath = [[NSBundle mainBundle] pathForResource:@"14" ofType:nil ];

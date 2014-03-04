@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Kge-dm-zgT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Mcc-ZY-6Ax">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--View Controller - MedInSight-->
         <scene sceneID="Tvq-Bc-wBN">
             <objects>
                 <viewController id="Kge-dm-zgT" customClass="KSViewController" sceneMemberID="viewController">
@@ -17,7 +17,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="jBZ-Yb-FxB" userLabel="View - Axial" customClass="KSDicom2DView">
-                                        <rect key="frame" x="20" y="129" width="360" height="360"/>
+                                        <rect key="frame" x="20" y="149" width="360" height="360"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
@@ -30,7 +30,7 @@
                                         </connections>
                                     </view>
                                     <view contentMode="scaleToFill" id="Cgi-bh-web" userLabel="View - Coronal" customClass="KSDicom2DView">
-                                        <rect key="frame" x="388" y="129" width="360" height="360"/>
+                                        <rect key="frame" x="388" y="149" width="360" height="360"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
@@ -43,7 +43,7 @@
                                         </connections>
                                     </view>
                                     <view contentMode="scaleToFill" id="j0c-9D-k7g" userLabel="View - Saggital" customClass="KSDicom2DView">
-                                        <rect key="frame" x="20" y="497" width="360" height="360"/>
+                                        <rect key="frame" x="20" y="517" width="360" height="360"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
@@ -56,7 +56,7 @@
                                         </connections>
                                     </view>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="4cw-SU-amj" userLabel="Label - PlaneID">
-                                        <rect key="frame" x="20" y="41" width="181" height="75"/>
+                                        <rect key="frame" x="20" y="75" width="181" height="75"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="60"/>
@@ -65,7 +65,7 @@
                                         <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="g5E-JF-S9G" userLabel="Label - Patient">
-                                        <rect key="frame" x="473" y="41" width="319" height="21"/>
+                                        <rect key="frame" x="473" y="75" width="319" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -74,7 +74,7 @@
                                         <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="V1L-hr-vrU" userLabel="Label - Modality">
-                                        <rect key="frame" x="473" y="58" width="319" height="21"/>
+                                        <rect key="frame" x="473" y="92" width="319" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -83,7 +83,7 @@
                                         <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="19O-em-07t" userLabel="Label - WW/WL">
-                                        <rect key="frame" x="473" y="77" width="319" height="21"/>
+                                        <rect key="frame" x="473" y="111" width="319" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -92,7 +92,7 @@
                                         <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="4lM-xN-qwK" userLabel="Label - Date">
-                                        <rect key="frame" x="473" y="95" width="319" height="21"/>
+                                        <rect key="frame" x="473" y="129" width="319" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -101,7 +101,7 @@
                                         <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="wL9-Pb-fh2">
-                                        <rect key="frame" x="122" y="905" width="524" height="29"/>
+                                        <rect key="frame" x="122" y="885" width="524" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </slider>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="0qk-1K-xWV">
@@ -140,6 +140,16 @@
                                             </barButtonItem>
                                         </items>
                                     </toolbar>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="1h7-Sk-4r7">
+                                        <rect key="frame" x="517" y="662" width="103" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="push2GLkView">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="IyN-H0-hgA" kind="push" identifier="push2GLKView" id="Zab-Ga-Zk3"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
@@ -150,6 +160,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="MedInSight" id="lcD-Kh-Ztc"/>
                     <connections>
                         <outlet property="DoubleTap" destination="NzL-sK-E1U" id="Huf-4U-bzt"/>
                         <outlet property="SingleTap" destination="Gfr-tL-jRn" id="Bcz-DO-go5"/>
@@ -250,7 +261,42 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1019" y="-259"/>
+            <point key="canvasLocation" x="2967" y="-259"/>
+        </scene>
+        <!--GLKit View Controller-->
+        <scene sceneID="kY1-1g-2dz">
+            <objects>
+                <glkViewController autoresizesArchivedViewToFullSize="NO" preferredFramesPerSecond="30" id="IyN-H0-hgA" customClass="ThrDReViewController" sceneMemberID="viewController">
+                    <glkView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ufd-9j-FkU">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <connections>
+                            <outlet property="delegate" destination="IyN-H0-hgA" id="6je-Ul-WUw"/>
+                        </connections>
+                    </glkView>
+                    <navigationItem key="navigationItem" id="wWm-xZ-pbM"/>
+                </glkViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n9j-Ol-YtQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3885" y="-262"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Ha2-Wd-NGr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Mcc-ZY-6Ax" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4Tr-s8-gYS">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Kge-dm-zgT" kind="relationship" relationship="rootViewController" id="6iA-9M-QOm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AKp-2F-puY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1993" y="-259"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
