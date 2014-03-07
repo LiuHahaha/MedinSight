@@ -29,6 +29,8 @@
 #define MAX_CENTER_Trans_X 293.376
 #define threshold_Trans_X 112.0696
 
+#define sampleNum 2
+
 NSMutableData *data;
 
 typedef enum {
@@ -60,6 +62,7 @@ CGPoint sumTransInView;
     // 图像数据体
     ushort *** imagesVolume;
     Byte *** images256Volume;
+    Byte *** sampledimages256Volume;
     
     //
     int orgx,orgy;
@@ -122,8 +125,8 @@ bool flag_data_read=false;
     if ([segue.identifier isEqualToString:@"push2GLKView"]) {
         if ([segue.destinationViewController isKindOfClass:[ThrDReViewController class]]) {
             ThrDReViewController *tvc = (ThrDReViewController *)segue.destinationViewController;
-            tvc.images256Volume = images256Volume;
-            [tvc setVolumeSidesLengthWithHeight:dataSize_Z Length:dataSize_X Width:dataSize_Y];
+            tvc.images256Volume = sampledimages256Volume;
+            [tvc setVolumeSidesLengthWithHeight:(int)(dataSize_Z/sampleNum) Length:(int)dataSize_X/sampleNum Width:(int)dataSize_Y/sampleNum];
         }
     }
 }
@@ -209,7 +212,6 @@ bool flag_data_read=false;
 #pragma mark sub thread
 - (void)loading{
     
-       
     NSLog(@"Data Slices Reading....");
     
     NSFileManager *fm = [NSFileManager defaultManager];
@@ -667,6 +669,7 @@ bool flag_data_read=false;
     //为图像数据体申请空间
     imagesVolume = (ushort ***)calloc(Documents_Num, sizeof(ushort **));
     images256Volume = (Byte ***)calloc(Documents_Num, sizeof(Byte **));
+    sampledimages256Volume = (Byte ***)calloc((int)(Documents_Num / sampleNum), sizeof(Byte **));
 
 
     
@@ -680,11 +683,27 @@ bool flag_data_read=false;
             images256Volume[i] = [self ConvertOneSliceData:absolutePathOfFile];
         }
         flag_data_read=true;
-        
+
         //获取数据体的三维
         dataSize_X =dicomDecoder.width;
         dataSize_Y =dicomDecoder.height;
-        dataSize_Z = Documents_Num - 1;
+        dataSize_Z = Documents_Num;
+        
+        //生成采样后的imageVolume，减小数据大小
+        //申请空间
+        for (int z=0; z<(int)(Documents_Num / sampleNum); z++) {
+            sampledimages256Volume[z] = (Byte **)calloc(dataSize_X / sampleNum, sizeof(Byte *));
+            for (int x=0; x<dataSize_X/sampleNum; x++)
+                sampledimages256Volume[z][x]= (Byte *)calloc(dataSize_Y / sampleNum, sizeof(Byte));
+        }
+        
+        //sampling
+        for (int z=0; z<(int)(Documents_Num / sampleNum); z++)
+            for (int x=0; x<dataSize_X/sampleNum; x++)
+                for (int y=0; y<dataSize_Y/sampleNum; y++) {
+                    sampledimages256Volume[z][x][y] = images256Volume[z*sampleNum][x*sampleNum][y*sampleNum];
+                }
+        
 
     }
     else {

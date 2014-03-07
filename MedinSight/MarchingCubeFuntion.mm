@@ -11,7 +11,7 @@
 
 
 #define STEP 1
-#define UNIT_CUBE_LENGTH 1.0
+#define UNIT_CUBE_LENGTH 1.0f
 
 //向量
 typedef struct
@@ -57,15 +57,17 @@ int NY;
 int NZ;
 
 ColoredVertexData3D vertexData;
-ColoredVertexData3D *vertexsDataArrayPtr;
+
 
 int numOfVertexs;
 
 
 NSMutableArray *vertexsDataArray;
+NSMutableArray *vertexsIndexArray;
 
 @interface MarchingCubeFuntion()
 {
+    ColoredVertexData3D *vertexsDataArrayPtr;
 }
 
 GLfloat fGetOffset(GLfloat fValue1, GLfloat fValue2, GLfloat fValueDesired);
@@ -73,7 +75,7 @@ GLvoid vGetColor(GLvector &rfColor, GLvector &rfPosition, GLvector &rfNormal);
 GLvoid vNormalizeVector(GLvector &rfVectorResult, GLvector &rfVectorSource);    // 向量标准化
 GLvoid vGetNormal(GLvector &rfNormal, GLfloat fX, GLfloat fY, GLfloat fZ);      // 计算 一点相对于iso的梯度
 GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale);         // Marching Cubes 算法对于一个 单个立方体
-GLvoid vMarchingCubes();
+- (GLvoid) vMarchingCubes;
 
 void setVertexInVertexData(GLfloat x, GLfloat y, GLfloat z);
 void setNormalInVertexData(GLfloat x, GLfloat y, GLfloat z);
@@ -87,8 +89,9 @@ GLvoid (*vMarchCube)(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale) = vMarc
 
 - (ColoredVertexData3D *)callvMarchingCubes
 {
-    vMarchingCubes();
+    [self vMarchingCubes];
     getDataValuesRange();
+    
     return vertexsDataArrayPtr;
 }
 
@@ -137,9 +140,9 @@ void getDataValuesRange();
 void getDataValuesRange()
 {
     int min = 255, max = 0;
-    for (int z = 0; z < 247; z++) {
-        for (int x = 0; x < 512; x++) {
-            for (int y = 0; y < 512; y ++) {
+    for (int z = 0; z < NZ; z++) {
+        for (int x = 0; x < NY; x++) {
+            for (int y = 0; y < NZ; y ++) {
                 if (min > data[z][x][y]) {
                     min = data[z][x][y];
                 }
@@ -221,6 +224,7 @@ GLvoid vGetNormal(GLvector &rfNormal, GLfloat fX, GLfloat fY, GLfloat fZ)       
 }
 
 
+
 GLfloat cubeVertexsValue[8]; //存放指定cube的顶点值
 GLvector asEdgeVertex[12];   //存放交点的位置
 GLvector asEdgeVertexNorm[12];     //存放交点的法向量
@@ -244,6 +248,7 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
                                                 [(int)(fX + a2fVertexCoordinate[iVertex][1])]
                                                 [(int)(fY + a2fVertexCoordinate[iVertex][2])] ;
     }
+
     
     //Find which vertices are inside of the surface and which are outside，如果顶点的值小于iso值，其bit位被置1
     iVertexsFlag = 0;
@@ -272,7 +277,7 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
             int EdgeEndVertex1 = a2iEdgeConnection[iEdge][1];
             
             fOffset = fGetOffset(cubeVertexsValue[EdgeEndVertex0], cubeVertexsValue[EdgeEndVertex1], fTargetValue);
-            
+
             asEdgeVertex[iEdge].fX = fX + (a2fVertexCoordinate[EdgeEndVertex0][0] + fOffset * a2fEdgeDirection[iEdge][0]) ;//* fScale;
             asEdgeVertex[iEdge].fY = fY + (a2fVertexCoordinate[EdgeEndVertex0][1] + fOffset * a2fEdgeDirection[iEdge][1]) ;//* fScale;
             asEdgeVertex[iEdge].fZ = fZ + (a2fVertexCoordinate[EdgeEndVertex0][2] + fOffset * a2fEdgeDirection[iEdge][2]) ;//* fScale;
@@ -283,10 +288,12 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
     
    
     //generate the triangles vertexs data that were found.  There can be up to five per cube
+
     for(iTriangle = 0; iTriangle < 5; iTriangle++)
     {
         if(a2iTriangleConnectionTable[iVertexsFlag][3*iTriangle] < 0)
             break;
+
         for(iCorner = 0; iCorner < 3; iCorner++)
         {
             iEdge = a2iTriangleConnectionTable[iVertexsFlag][3*iTriangle+iCorner];
@@ -296,23 +303,31 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
             setVertexInVertexData(asEdgeVertex[iEdge].fX, asEdgeVertex[iEdge].fY, asEdgeVertex[iEdge].fZ);
             setNormalInVertexData(asEdgeVertexNorm[iEdge].fX, asEdgeVertexNorm[iEdge].fY, asEdgeVertexNorm[iEdge].fZ);
             setColorInVertexData(sColor.fX, sColor.fY, sColor.fZ);
+
+            NSValue *vertexDataValue = [NSValue valueWithBytes:&vertexData objCType:@encode(ColoredVertexData3D)];
+
+//            if ([vertexsDataArray indexOfObject:vertexDataValue] != NSNotFound) { //如果已经记录，把位置记录在index中
+//                [vertexsIndexArray addObject:[NSNumber numberWithInt:[vertexsDataArray indexOfObject:vertexDataValue]]];
+//            } else { //如果第一次出现，加入vertexsDataArray，在indexArray中记录位置
+//                [vertexsDataArray addObject:vertexDataValue];
+//                [vertexsIndexArray addObject:[NSNumber numberWithInt:[vertexsDataArray indexOfObject:vertexDataValue]]];
+//            }
+           
             
-            [vertexsDataArray addObject:[NSValue value:&vertexData withObjCType:@encode(ColoredVertexData3D)]];
-            
-            
-            
+            [vertexsDataArray addObject:vertexDataValue];
 //            glColor3f(sColor.fX, sColor.fY, sColor.fZ);
 //            glNormal3f(asEdgeVertexNorm[iEdge].fX, asEdgeVertexNorm[iEdge].fY, asEdgeVertexNorm[iEdge].fZ);
 //            glVertex3f(asEdgeVertex[iEdge].fX, asEdgeVertex[iEdge].fY, asEdgeVertex[iEdge].fZ);
         }
+
     }
 }
 
 //vMarchingCubes iterates over the entire dataset, calling vMarchCube on each cube
 
-#define THRESHOLD 1
-#define RANGE 1
-GLvoid vMarchingCubes()
+#define THRESHOLD 100000
+#define RANGE 2
+- (GLvoid) vMarchingCubes
 {
     vertexsDataArray = [[NSMutableArray alloc] init];
     GLint iX, iY, iZ;
@@ -320,8 +335,10 @@ GLvoid vMarchingCubes()
         for(iX = 0; iX < NX-STEP; iX++)
             for(iY = 0; iY < NY-STEP; iY++)
             {
-
-                
+//                if ( (arc4random() % THRESHOLD) < (THRESHOLD - RANGE) ) {
+//                    continue;
+//                }
+//                NSLog(@"NZ: %d, NX: %d, NY: %d", iZ, iX, iY);
                 vMarchCube(iX, iY, iZ, 1);
             }
     
@@ -329,14 +346,24 @@ GLvoid vMarchingCubes()
     
     numOfVertexs = [vertexsDataArray count];
     NSLog(@"num of vertexs: %d", numOfVertexs);
+//    NSLog(@"num of index: %d", [vertexsIndexArray count]);
     
-    ColoredVertexData3D vertexsData[numOfVertexs];
-    for (int i = 0; i < numOfVertexs - 1; i++) {
-        [[vertexsDataArray objectAtIndex:i] getValue:&vertexsData[i]];
-        [vertexsDataArray removeObject:[vertexsDataArray objectAtIndex:i]];
+    [vertexsDataArray writeToFile:@"vertexsDataArray" atomically:YES];
+//    [vertexsIndexArray writeToFile:@"vertexsIndexArray" atomically:YES];
+
+//    ColoredVertexData3D vertexsData[numOfVertexs];
+//    for (int i = 0; i < numOfVertexs; i++) {
+//        [[vertexsDataArray objectAtIndex:i] getValue:&vertexsData[i]];
+//        //[vertexsDataArray removeObject:[vertexsDataArray objectAtIndex:i]];
+//    }
+    
+    vertexsDataArrayPtr = (ColoredVertexData3D *)calloc(numOfVertexs, sizeof(ColoredVertexData3D));
+    for (int i = 0; i < numOfVertexs; i++) {
+        [[vertexsDataArray objectAtIndex:i] getValue:&vertexsDataArrayPtr[i]];
     }
     
-    vertexsDataArrayPtr = vertexsData;
+    
+
 }
 
 
