@@ -12,6 +12,7 @@
 		009875D617C4AC7D00477F83 /* 影像图标 57 57.png in Resources */ = {isa = PBXBuildFile; fileRef = 009875D317C4AC7D00477F83 /* 影像图标 57 57.png */; };
 		009875D717C4AC7D00477F83 /* 影像图标 72 72.png in Resources */ = {isa = PBXBuildFile; fileRef = 009875D417C4AC7D00477F83 /* 影像图标 72 72.png */; };
 		009875D817C4AC7D00477F83 /* 影像图标 144 144.png in Resources */ = {isa = PBXBuildFile; fileRef = 009875D517C4AC7D00477F83 /* 影像图标 144 144.png */; };
+		3502025818D0071A001802AF /* AGLKVertexAttribArrayBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3502025718D0071A001802AF /* AGLKVertexAttribArrayBuffer.m */; };
 		35B058FE18BECC2100518A97 /* DeckView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B058FB18BECC2100518A97 /* DeckView.m */; };
 		35B058FF18BECC2100518A97 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B058FD18BECC2100518A97 /* MainView.m */; };
 		35B0590318BF127B00518A97 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B0590218BF127B00518A97 /* Images.xcassets */; };
@@ -42,6 +43,8 @@
 		009875D317C4AC7D00477F83 /* 影像图标 57 57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "影像图标 57 57.png"; sourceTree = "<group>"; };
 		009875D417C4AC7D00477F83 /* 影像图标 72 72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "影像图标 72 72.png"; sourceTree = "<group>"; };
 		009875D517C4AC7D00477F83 /* 影像图标 144 144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "影像图标 144 144.png"; sourceTree = "<group>"; };
+		3502025618D0071A001802AF /* AGLKVertexAttribArrayBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGLKVertexAttribArrayBuffer.h; sourceTree = "<group>"; };
+		3502025718D0071A001802AF /* AGLKVertexAttribArrayBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGLKVertexAttribArrayBuffer.m; sourceTree = "<group>"; };
 		35B058FA18BECC2100518A97 /* DeckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckView.h; sourceTree = "<group>"; };
 		35B058FB18BECC2100518A97 /* DeckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckView.m; sourceTree = "<group>"; };
 		35B058FC18BECC2100518A97 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
@@ -177,6 +180,8 @@
 		E3AF4A2F14AD90D000158E33 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3502025618D0071A001802AF /* AGLKVertexAttribArrayBuffer.h */,
+				3502025718D0071A001802AF /* AGLKVertexAttribArrayBuffer.m */,
 				35B0591318C0303C00518A97 /* ThrDReViewController.h */,
 				35B0591418C0303C00518A97 /* ThrDReViewController.m */,
 				35B0591618C0AFF200518A97 /* MarchingCubeFuntion.h */,
@@ -311,6 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3502025818D0071A001802AF /* AGLKVertexAttribArrayBuffer.m in Sources */,
 				E3AF4A1B14AD90C100158E33 /* main.m in Sources */,
 				E3AF4A1F14AD90C100158E33 /* KSAppDelegate.m in Sources */,
 				E3AF4A2814AD90C100158E33 /* KSViewController.m in Sources */,

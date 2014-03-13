@@ -41,8 +41,8 @@ typedef struct {
     
 }
 
-- (id)initWithData:(Byte ***)images256Volume Height:(int)nz Length:(int)nx andWidth:(int)ny;
-- (ColoredVertexData3D *)callvMarchingCubes;
-- (int)getNumOfVertexs;
+- (id)initWithData:(Byte ***)images256Volume Height:(int)nz Width:(int)ny andLength:(int)nx;
+- (int)callvMarchingCubesWith:(GLfloat **)aVertexsDataArrayPtr And:(GLfloat **)aNormalsDataArrayPtr;
+
 
 @end

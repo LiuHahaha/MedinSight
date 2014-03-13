@@ -26,5 +26,5 @@ typedef struct
 @property (strong, nonatomic) GLKBaseEffect *baseEffect;
 @property (nonatomic) Byte ***images256Volume;
 
-- (void)setVolumeSidesLengthWithHeight:(int)z Length:(int)x Width:(int)y;
+- (void)setVolumeSidesLengthWithHeight:(int)z Width:(int)y Length:(int)x;
 @end

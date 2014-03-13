@@ -186,11 +186,28 @@
         return;
     }
     
+    //-------------------------------------
+    //revised by leon on 2014.3.8
+//    int max = winCenter + winWidth / 2;
+//    int min = winCenter - winWidth / 2;
+    //-------------------------------------
+    
     NSInteger k = 0;
     for (NSInteger i = 0; i < imgHeight; ++i) {
         k = i * imgWidth;
         for (NSInteger j = 0; j < imgWidth; ++j) {
-            imageData[k + j] = lut16[pix16[k + j]]; 
+            imageData[k + j] = lut16[pix16[k + j]];
+
+            //----------------------------------------------
+            //revised by leon on 2014.3.8
+//            if (pix16[k + j] > max) {
+//                imageData[k + j] = 255;
+//            } else if (pix16[k + j] < min) {
+//                imageData[k + j] = 0;
+//            } else {
+//                imageData[k + j] = (pix16[k + j] - winCenter + winWidth / 2) / winWidth * 255;
+//            }
+            //----------------------------------------------
         }
     }
     
@@ -408,5 +425,6 @@
             lut16[i] = (Byte)((i - winMin) * factor);
     }
 }
+
 
 @end

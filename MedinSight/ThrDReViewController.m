@@ -8,22 +8,8 @@
 
 #import "ThrDReViewController.h"
 #import "MarchingCubeFuntion.h"
+#import "AGLKVertexAttribArrayBuffer.h"
 
-/////////////////////////////////////////////////////////////////
-// This data type is used to store information for each vertex
-//typedef struct {
-//    GLKVector3  positionCoords;
-//}
-//SceneVertex;
-//
-///////////////////////////////////////////////////////////////////
-//// Define vertex data for a triangle to use in example
-//static const SceneVertex vertices[] =
-//{
-//    {{-0.5f, -0.5f, 0.0}}, // lower left corner
-//    {{ 0.5f, -0.5f, 0.0}}, // lower right corner
-//    {{-0.5f,  0.5f, 0.0}}  // upper left corner
-//};
 
 static const GLfloat afAmbientWhite [] = {0.25, 0.25, 0.25, 1.00};   // 周围 环绕 白
 static const GLfloat afAmbientRed   [] = {0.25, 0.00, 0.00, 1.00};   // 周围 环绕 红
@@ -40,20 +26,35 @@ static const GLfloat afSpecularBlue [] = {0.25, 0.25, 1.00, 1.00};   // 反射 �
 
 
 
-ColoredVertexData3D testDataArray[3];
-
 @interface ThrDReViewController()
 {
-    ColoredVertexData3D *vertexsDataArrayPtr;
-    int numOfVertexs;
+    GLfloat *vertexsDataArrayPtr;
+    GLfloat *normalsDataArrayPtr;
+    
+    int numberOfVertices;
+    
+    float _rotation;
 }
+@property (strong, nonatomic) AGLKVertexAttribArrayBuffer *vertexPositionBuffer;
+@property (strong, nonatomic) AGLKVertexAttribArrayBuffer *vertexNormalBuffer;
+@property (nonatomic) GLKMatrixStackRef modelviewMatrixStack;
+
+- (void)initDataEntrance;
 
 @end
+
+
+
 @implementation ThrDReViewController
 
 @synthesize baseEffect;
+@synthesize vertexPositionBuffer;
+@synthesize vertexNormalBuffer;
+@synthesize modelviewMatrixStack;
 
-- (void)setVolumeSidesLengthWithHeight:(int)z Length:(int)x Width:(int)y
+#pragma mark initDataInfo
+//设置接受的数据体的边长
+- (void)setVolumeSidesLengthWithHeight:(int)z Width:(int)y Length:(int)x
 {
     volumeSidesLength.Length = x;
     volumeSidesLength.Width = y;
@@ -62,33 +63,110 @@ ColoredVertexData3D testDataArray[3];
     NSLog(@"%d,%d,%d", z, x, y);
 
 }
+- (void)initDataEntrance
+{
+    //init the MarchingCube
+    MarchingCubeFuntion *marchingCubeMachine = [[MarchingCubeFuntion alloc] initWithData:self.images256Volume
+                                                                                  Height:volumeSidesLength.Height
+                                                                                   Width:volumeSidesLength.Width
+                                                                               andLength:volumeSidesLength.Length];
+    
+    numberOfVertices = [marchingCubeMachine callvMarchingCubesWith:&vertexsDataArrayPtr
+                                                               And:&normalsDataArrayPtr];
+}
+
+
+#pragma mark OpenGL ES function
+// Setup a light to simulate the Sun
+- (void)configureLight
+{
+    self.baseEffect.light0.enabled = GL_TRUE;
+    self.baseEffect.light0.diffuseColor = GLKVector4Make(
+                                                         1.0f, // Red
+                                                         1.0f, // Green
+                                                         1.0f, // Blue
+                                                         1.0f);// Alpha
+    self.baseEffect.light0.position = GLKVector4Make(
+                                                     1.0f,  
+                                                     0.0f,  
+                                                     0.8f,  
+                                                     0.0f);
+    self.baseEffect.light0.ambientColor = GLKVector4Make(
+                                                         0.2f, // Red 
+                                                         0.2f, // Green 
+                                                         0.2f, // Blue 
+                                                         1.0f);// Alpha
+    
+//    //灯光
+//    self.baseEffect.light0.enabled = GL_TRUE;
+//    //    self.baseEffect.lightModelTwoSided = GL_TRUE;
+//    self.baseEffect.light0.position = GLKVector4Make(1.0f, 1.0f, 0.5f, 0.0f);
+//    
+//    //灯光属性
+//    //    self.baseEffect.light0.ambientColor = GLKVector4Make(0.25f, 0.25f, 0.25f, 1.00f);
+//    //    self.baseEffect.light0.diffuseColor = GLKVector4Make(0.75f, 0.75f, 0.75f, 1.00f);
+//    //    self.baseEffect.light0.specularColor = GLKVector4Make(1.00, 0.25, 0.25, 1.00);
+//    
+//    self.baseEffect.light0.diffuseColor = GLKVector4Make(0.7f, 0.7f, 0.7f, 1.0f);
+//    
+//    //材质
+//    //    self.baseEffect.colorMaterialEnabled = GL_TRUE;
+//    //    self.baseEffect.material.ambientColor = GLKVector4Make(0.25, 0.25, 0.25, 1.00);
+//    //    self.baseEffect.material.diffuseColor = GLKVector4Make(0.75, 0.75, 0.75, 1.00);
+//    //    self.baseEffect.material.specularColor = GLKVector4Make(1.00, 1.00, 1.00, 1.00);
+//    //    self.baseEffect.material.shininess = 10.0f;
+
+}
+
+
+- (void)takeShouldUsePerspectiveFrom:(BOOL)aControl;
+{
+    GLfloat   aspectRatio =
+    (float)((GLKView *)self.view).drawableWidth /
+    (float)((GLKView *)self.view).drawableHeight;
+    
+    if(aControl)
+    {
+//        self.baseEffect.transform.projectionMatrix =
+//        GLKMatrix4MakeFrustum(
+//                              -1.0 * aspectRatio,
+//                              1.0 * aspectRatio,
+//                              -1.0,
+//                              1.0,
+//                              1.0,
+//                              120.0);
+
+        GLfloat size = .01 * tanf(GLKMathDegreesToRadians(45.0) / 2.0);
+        self.baseEffect.transform.projectionMatrix =
+        GLKMatrix4MakeFrustum(
+                              -size *aspectRatio,                           // Left
+                              size *aspectRatio,                            // Right
+                              -size,                                        // Bottom
+                              size,                                         // Top
+                              .01,                                          // Near
+                              1000.0);                                      // Far
+    }
+    else
+    {
+        self.baseEffect.transform.projectionMatrix =
+        GLKMatrix4MakeOrtho(
+                            -1.0 * aspectRatio,
+                            1.0 * aspectRatio, 
+                            -1.0, 
+                            1.0, 
+                            1.0,
+                            120.0);  
+    }
+}
 
 #pragma mark View Lifecycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+   
+    [self initDataEntrance];
     
-    //testArray
-//    testDataArray[0].vertex.x = -0.5f;
-//    testDataArray[0].vertex.y = -0.5f;
-//    testDataArray[0].vertex.z = 0.0;
-//    
-//    testDataArray[1].vertex.x = 0.5f;
-//    testDataArray[1].vertex.y = -0.5f;
-//    testDataArray[1].vertex.z = 0.0;
-//    
-//    testDataArray[2].vertex.x = -0.5f;
-//    testDataArray[2].vertex.y = 0.5f;
-//    testDataArray[2].vertex.z = 0.0;
-    
-    //init the MarchingCube
-    MarchingCubeFuntion *marchingCubeMachine = [[MarchingCubeFuntion alloc] initWithData:self.images256Volume
-                                                                                  Height:volumeSidesLength.Height
-                                                                                   Length:volumeSidesLength.Length
-                                                                               andWidth:volumeSidesLength.Width];
-    vertexsDataArrayPtr = [marchingCubeMachine callvMarchingCubes];
-    numOfVertexs = [marchingCubeMachine getNumOfVertexs];
-    
+    self.modelviewMatrixStack = GLKMatrixStackCreate(kCFAllocatorDefault);
   
     // Verify the type of view created automatically by the
     // Interface Builder storyboard
@@ -112,45 +190,89 @@ ColoredVertexData3D testDataArray[3];
     // Shading Language programs and set constants to be used for
     // all subsequent rendering
     self.baseEffect = [[GLKBaseEffect alloc] init];
-//    self.baseEffect.useConstantColor = GL_TRUE;
-//    self.baseEffect.constantColor = GLKVector4Make(
-//                                                   0.0f, // Red
-//                                                   0.0f, // Green
-//                                                   0.0f, // Blue
-//                                                   1.0f);// Alpha
-    //灯光
-    self.baseEffect.light0.enabled = GL_TRUE;
-//    self.baseEffect.lightModelTwoSided = GL_TRUE;
-    self.baseEffect.light0.ambientColor = GLKVector4Make(0.25f, 0.25f, 0.25f, 1.00f);
-    self.baseEffect.light0.diffuseColor = GLKVector4Make(0.75f, 0.75f, 0.75f, 1.00f);
-    self.baseEffect.light0.specularColor = GLKVector4Make(1.00, 0.25, 0.25, 1.00);
-    self.baseEffect.light0.position = GLKVector4Make(1.0f, 1.0f, 0.5f, 0.0f);
-    
-    //材质
-    self.baseEffect.material.ambientColor = GLKVector4Make(0.25, 0.25, 0.25, 1.00);
-    self.baseEffect.material.diffuseColor = GLKVector4Make(0.75, 0.75, 0.75, 1.00);
-    self.baseEffect.material.specularColor = GLKVector4Make(1.00, 1.00, 1.00, 1.00);
-    self.baseEffect.material.shininess = 10.0f;
 
+    // Setup a light to simulate the Sun
+    [self configureLight];
+    
+    // Set a reasonable initial projection
+    self.baseEffect.transform.projectionMatrix =
+    GLKMatrix4MakeOrtho(
+                        -1.0 * 4.0 / 3.0,
+                        1.0 * 4.0 / 3.0,
+                        -1.0,
+                        1.0,
+                        1.0,
+                        120.0);
+    
+    // Position scene with Earth near center of viewing volume
+    self.baseEffect.transform.modelviewMatrix = 
+    GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0);
     
     // Set the background color stored in the current context
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // background color
+    glClearColor(0.7f, 0.7f, 0.7f, 10.7f); // background color
     
-    // Generate, bind, and initialize contents of a buffer to be
-    // stored in GPU memory
-    glGenBuffers(1,                // STEP 1
-                 &vertexBufferID);
-    glBindBuffer(GL_ARRAY_BUFFER,  // STEP 2
-                 vertexBufferID);
-    glBufferData(                  // STEP 3
-                 GL_ARRAY_BUFFER,  // Initialize buffer contents
-                 numOfVertexs * sizeof(ColoredVertexData3D), // Number of bytes to copy
-                 vertexsDataArrayPtr,         // Address of bytes to copy
-                 GL_STATIC_DRAW);  // Hint: cache in GPU memory
+    // Create vertex buffers containing vertices to draw
+    self.vertexPositionBuffer = [[AGLKVertexAttribArrayBuffer alloc]
+                                 initWithAttribStride:(3 * sizeof(GLfloat))
+                                 numberOfVertices:numberOfVertices
+                                 bytes:vertexsDataArrayPtr
+                                 usage:GL_STATIC_DRAW];
+    self.vertexNormalBuffer = [[AGLKVertexAttribArrayBuffer alloc]
+                               initWithAttribStride:(3 * sizeof(GLfloat))
+                               numberOfVertices:numberOfVertices
+                               bytes:normalsDataArrayPtr
+                               usage:GL_STATIC_DRAW];
     
-    glEnable(GL_DEPTH_TEST);
+    
+    // Initialize the matrix stack
+    GLKMatrixStackLoadMatrix4(
+                              self.modelviewMatrixStack,
+                              self.baseEffect.transform.modelviewMatrix);
+    
 }
 
+/////////////////////////////////////////////////////////////////
+// Draw the Rebuild image
+- (void)drawReconstructedImage
+{
+    [self takeShouldUsePerspectiveFrom:YES];
+    
+    GLKMatrixStackPush(self.modelviewMatrixStack);
+    
+    GLKMatrixStackRotate(   // Rotate the thing to face forward
+                         self.modelviewMatrixStack,
+                         GLKMathDegreesToRadians(-90),
+                         1.0, 0.0, 0.0);
+    GLKMatrixStackTranslate(// Translate to distance from Earth
+                            self.modelviewMatrixStack,
+                            0.0, 0.0, 0.0);
+    GLKMatrixStackScale(    // Scale to size of Moon
+                        self.modelviewMatrixStack,
+                        1.0f / (volumeSidesLength.Length/2),
+                        1.0f / (volumeSidesLength.Length/2),
+                        1.0f / (volumeSidesLength.Length/2));
+    GLKMatrixStackRotate(   // Rotate the thing on its own axis
+                         self.modelviewMatrixStack,
+                         GLKMathDegreesToRadians(_rotation),
+                         0.0, 0.0, 1.0);
+    
+    self.baseEffect.transform.modelviewMatrix =
+    GLKMatrixStackGetMatrix4(self.modelviewMatrixStack);
+    
+    [self.baseEffect prepareToDraw];
+    
+    // Draw triangles using vertices in the prepared vertex
+    // buffers
+    [AGLKVertexAttribArrayBuffer
+     drawPreparedArraysWithMode:GL_TRIANGLES
+     startVertexIndex:0
+     numberOfVertices:numberOfVertices];
+    
+    GLKMatrixStackPop(self.modelviewMatrixStack);
+    
+    self.baseEffect.transform.modelviewMatrix = 
+    GLKMatrixStackGetMatrix4(self.modelviewMatrixStack);
+}
 
 /////////////////////////////////////////////////////////////////
 // GLKView delegate method: Called by the view controller's view
@@ -159,80 +281,25 @@ ColoredVertexData3D testDataArray[3];
 // shares memory with a Core Animation Layer)
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    // STEP 4
-    // Enable use of positions from bound vertex buffer
-    glEnableVertexAttribArray(GLKVertexAttribPosition);
-    glEnableVertexAttribArray(GLKVertexAttribNormal);
-    glEnableVertexAttribArray(GLKVertexAttribColor);
-
-    
-    // STEP 5
-    glVertexAttribPointer(GLKVertexAttribPosition,
-                          3,                   // three components per vertex
-                          GL_FLOAT,            // data is floating point
-                          GL_FALSE,            // no fixed point scaling
-                          sizeof(ColoredVertexData3D), // no gaps in data
-                          NULL
-                          );               // NULL tells GPU to start at beginning of bound buffer
-    
-    
-    glVertexAttribPointer(GLKVertexAttribNormal,
-                          3,                   // three components per vertex
-                          GL_FLOAT,            // data is floating point
-                          GL_FALSE,            // no fixed point scaling
-                          sizeof(ColoredVertexData3D), //
-                          (GLvoid*) (3*sizeof(Vertex3D))
-                          );
-    
-    
-    glVertexAttribPointer(GLKVertexAttribColor,
-                          4,                   // three components per vertex
-                          GL_FLOAT,            // data is floating point
-                          GL_FALSE,            // no fixed point scaling
-                          sizeof(ColoredVertexData3D), //
-                          (GLvoid*) (3*sizeof(Vertex3D) + 3*sizeof(Vector3D))
-                          );
-    
-    [self.baseEffect prepareToDraw];
-    
+    _rotation += 1;
     // Clear Frame Buffer (erase previous drawing)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
+    [self.vertexPositionBuffer
+     prepareToDrawWithAttrib:GLKVertexAttribPosition
+     numberOfCoordinates:3
+     attribOffset:0
+     shouldEnable:YES];
+    [self.vertexNormalBuffer
+     prepareToDrawWithAttrib:GLKVertexAttribNormal
+     numberOfCoordinates:3
+     attribOffset:0
+     shouldEnable:YES];
     
     
-    // Scale the Y coordinate based on the aspect ratio of the
-    // view's Layer which matches the screen aspect ratio for
-    // this example
-    const GLfloat  aspectRatio =
-    (GLfloat)view.drawableWidth / (GLfloat)view.drawableHeight;
-    
-    GLKMatrix4 scaleProjectionMatrix = GLKMatrix4MakeScale(1.0f, aspectRatio, 1.0f);
-//
-    self.baseEffect.transform.projectionMatrix = scaleProjectionMatrix;
-    
-    //scale
-    GLKMatrix4 scaleMatrix = GLKMatrix4MakeScale(1.0f / (volumeSidesLength.Length/2),
-                                                 1.0f / (volumeSidesLength.Length/2),
-                                                 1.0f / (volumeSidesLength.Length/2));
-    //transform
-    GLKMatrix4 transformMatrix = GLKMatrix4MakeTranslation(-volumeSidesLength.Length/2, -volumeSidesLength.Width/2, -volumeSidesLength.Height/2);
-    //rotate
-    GLKMatrix4 rotateMatrixAboutX = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(-90.0f), 1.0, 0.0, 0.0);
-    GLKMatrix4 rotateMatrixAboutY = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(90.0f), 0.0, 1.0, 0.0);
-    GLKMatrix4 rotateMatrix = GLKMatrix4Multiply(rotateMatrixAboutY, rotateMatrixAboutX);
-//    self.baseEffect.transform.modelviewMatrix = GLKMatrix4Multiply(rotateMatrixAboutX, rotateMatrixAboutY);
-    self.baseEffect.transform.modelviewMatrix = GLKMatrix4Multiply(GLKMatrix4Multiply(rotateMatrix, scaleMatrix), transformMatrix);
-    
-    
-    // Draw triangles using the first three vertices in the
-    // currently bound vertex buffer
-    glDrawArrays(GL_TRIANGLES,      // STEP 6
-                 0,  // Start with first vertex in currently bound buffer
-                 numOfVertexs); // Use three vertices from currently bound buffer
-    
-    glDisableVertexAttribArray(GLKVertexAttribPosition);
-    glDisableVertexAttribArray(GLKVertexAttribNormal);
-    glDisableVertexAttribArray(GLKVertexAttribColor);
+    [self drawReconstructedImage];
+
+    glEnable(GL_DEPTH_TEST);
 }
 
 
@@ -249,19 +316,21 @@ ColoredVertexData3D testDataArray[3];
     [EAGLContext setCurrentContext:view.context];
     
     // Delete buffers that aren't needed when view is unloaded
-    if (0 != vertexBufferID)
-    {
-        glDeleteBuffers (1,          // STEP 7 
-                         &vertexBufferID);  
-        vertexBufferID = 0;
-    }
+    self.vertexPositionBuffer = nil;
+    self.vertexNormalBuffer = nil;
     
     // Stop using the context created in -viewDidLoad
     ((GLKView *)self.view).context = nil;
     [EAGLContext setCurrentContext:nil];
+    
+    CFRelease(self.modelviewMatrixStack);
+    self.modelviewMatrixStack = NULL;
 }
 
-
-
+//- (void)update
+//{
+//    _rotation += 15 * self.timeSinceLastUpdate;
+//
+//}
 
 @end

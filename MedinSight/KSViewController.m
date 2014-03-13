@@ -126,7 +126,7 @@ bool flag_data_read=false;
         if ([segue.destinationViewController isKindOfClass:[ThrDReViewController class]]) {
             ThrDReViewController *tvc = (ThrDReViewController *)segue.destinationViewController;
             tvc.images256Volume = sampledimages256Volume;
-            [tvc setVolumeSidesLengthWithHeight:(int)(dataSize_Z/sampleNum) Length:(int)dataSize_X/sampleNum Width:(int)dataSize_Y/sampleNum];
+            [tvc setVolumeSidesLengthWithHeight:(int)(dataSize_Z/sampleNum) Width:(int)dataSize_Y/sampleNum Length:(int)dataSize_X/sampleNum];
         }
     }
 }

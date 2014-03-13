@@ -49,37 +49,42 @@ static const GLfloat a2fEdgeDirection[12][3] =
     {0.0, 0.0, 1.0},{0.0, 0.0, 1.0},{ 0.0, 0.0, 1.0},{0.0,  0.0, 1.0}
 };
 
-
+//阈值，iso的值
 GLfloat fTargetValue = 100.0;
+
+//IN, 存放需要重建的数据体
 Byte ***data;
+
+//IN, 存放data的边长
 int NX;
 int NY;
 int NZ;
 
-ColoredVertexData3D vertexData;
 
+//DEBUG, 顶点个数
+int numberOfVertices;
 
-int numOfVertexs;
-
-
+//存放生成的顶点
 NSMutableArray *vertexsDataArray;
-NSMutableArray *vertexsIndexArray;
+NSMutableArray *normalsDataArray;
 
 @interface MarchingCubeFuntion()
 {
-    ColoredVertexData3D *vertexsDataArrayPtr;
+    //OUT，指向顶点数组
+    GLfloat *vertexsDataArrayPtr;
+    GLfloat *normalsDataArrayPtr;
 }
 
-GLfloat fGetOffset(GLfloat fValue1, GLfloat fValue2, GLfloat fValueDesired);
-GLvoid vGetColor(GLvector &rfColor, GLvector &rfPosition, GLvector &rfNormal);
+GLfloat fGetOffset(GLfloat fValue1, GLfloat fValue2, GLfloat fValueDesired);    // 线性插值找交点，也可以直接使用中点
+GLvoid vGetColor(GLvector &rfColor, GLvector &rfPosition, GLvector &rfNormal);  // 计算一点的颜色，有问题
 GLvoid vNormalizeVector(GLvector &rfVectorResult, GLvector &rfVectorSource);    // 向量标准化
-GLvoid vGetNormal(GLvector &rfNormal, GLfloat fX, GLfloat fY, GLfloat fZ);      // 计算 一点相对于iso的梯度
+GLvoid vGetNormal(GLvector &rfNormal, GLfloat fX, GLfloat fY, GLfloat fZ);      // 计算iso在一点的梯度
 GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale);         // Marching Cubes 算法对于一个 单个立方体
 - (GLvoid) vMarchingCubes;
 
-void setVertexInVertexData(GLfloat x, GLfloat y, GLfloat z);
-void setNormalInVertexData(GLfloat x, GLfloat y, GLfloat z);
-void setColorInVertexData(GLfloat x, GLfloat y, GLfloat z);
+
+
+void getDataValuesRange();
 
 @end
 
@@ -87,43 +92,39 @@ GLvoid (*vMarchCube)(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale) = vMarc
 
 @implementation MarchingCubeFuntion
 
-- (ColoredVertexData3D *)callvMarchingCubes
+- (int)callvMarchingCubesWith:(GLfloat **)aVertexsDataArrayPtr And:(GLfloat **)aNormalsDataArrayPtr
 {
     [self vMarchingCubes];
     getDataValuesRange();
     
-    return vertexsDataArrayPtr;
+    *aVertexsDataArrayPtr = vertexsDataArrayPtr;
+    *aNormalsDataArrayPtr = normalsDataArrayPtr;
+    
+    return numberOfVertices;
 }
 
-- (int)getNumOfVertexs
+
+
+void getDataValuesRange()
 {
-    return numOfVertexs;
-}
-
-void setVertexInVertexData(GLfloat x, GLfloat y, GLfloat z)
-{
-    vertexData.vertex.x = x;
-    vertexData.vertex.y = y;
-    vertexData.vertex.z = z;
-}
-
-void setNormalInVertexData(GLfloat x, GLfloat y, GLfloat z)
-{
-    vertexData.normal.x = x;
-    vertexData.normal.y = y;
-    vertexData.normal.z = z;
-}
-
-void setColorInVertexData(GLfloat r, GLfloat g, GLfloat b)
-{
-    vertexData.color.r = r;
-    vertexData.color.g = g;
-    vertexData.color.b = b;
-    vertexData.color.a = 1.0f;
+    int min = 255, max = 0;
+    for (int z = 0; z < NZ; z++) {
+        for (int y = 0; y < NY; y ++) {
+            for (int x = 0; x < NX; x++) {
+                if (min > data[z][y][x]) {
+                    min = data[z][y][x];
+                }
+                if (max < data[z][y][x]) {
+                    max = data[z][y][x];
+                }
+            }
+        }
+    }
+    NSLog(@"range from %d to %d", min, max);
 }
 
 
-- (id)initWithData:(Byte ***)images256Volume Height:(int)nz Length:(int)nx andWidth:(int)ny
+- (id)initWithData:(Byte ***)images256Volume Height:(int)nz Width:(int)ny andLength:(int)nx
 {
     self = [super init];
     if (self) {
@@ -136,24 +137,7 @@ void setColorInVertexData(GLfloat r, GLfloat g, GLfloat b)
     return self;
 }
 
-void getDataValuesRange();
-void getDataValuesRange()
-{
-    int min = 255, max = 0;
-    for (int z = 0; z < NZ; z++) {
-        for (int x = 0; x < NY; x++) {
-            for (int y = 0; y < NZ; y ++) {
-                if (min > data[z][x][y]) {
-                    min = data[z][x][y];
-                }
-                if (max < data[z][x][y]) {
-                    max = data[z][x][y];
-                }
-            }
-        }
-    }
-    NSLog(@"range from %d to %d", min, max);
-}
+
 
 
 #pragma mark Marching Cube 计算相关函数
@@ -173,16 +157,6 @@ GLfloat fGetOffset(GLfloat fValue1, GLfloat fValue2, GLfloat fValueDesired)
     return (fValueDesired - fValue1)/fDelta;
 }
 
-// 根据 位置 以及 法向量 产生颜色
-GLvoid vGetColor(GLvector &rfColor, GLvector &rfPosition, GLvector &rfNormal)
-{
-    GLfloat fX = rfNormal.fX;
-    GLfloat fY = rfNormal.fY;
-    GLfloat fZ = rfNormal.fZ;
-    rfColor.fX = (fX > 0.0 ? fX : 0.0) + (fY < 0.0 ? -0.5*fY : 0.0) + (fZ < 0.0 ? -0.5*fZ : 0.0);
-    rfColor.fY = (fY > 0.0 ? fY : 0.0) + (fZ < 0.0 ? -0.5*fZ : 0.0) + (fX < 0.0 ? -0.5*fX : 0.0);
-    rfColor.fZ = (fZ > 0.0 ? fZ : 0.0) + (fX < 0.0 ? -0.5*fX : 0.0) + (fY < 0.0 ? -0.5*fY : 0.0);
-}
 
 //向量标准化
 GLvoid vNormalizeVector(GLvector &rfVectorResult, GLvector &rfVectorSource)
@@ -190,9 +164,11 @@ GLvoid vNormalizeVector(GLvector &rfVectorResult, GLvector &rfVectorSource)
     GLfloat fOldLength;
     GLfloat fScale;
     
-    fOldLength = sqrtf( (rfVectorSource.fX * rfVectorSource.fX) +
+    fOldLength = sqrtf(
+                       (rfVectorSource.fX * rfVectorSource.fX) +
                        (rfVectorSource.fY * rfVectorSource.fY) +
-                       (rfVectorSource.fZ * rfVectorSource.fZ) );
+                       (rfVectorSource.fZ * rfVectorSource.fZ)
+                       );
     
     if(fOldLength == 0.0)
     {
@@ -214,20 +190,17 @@ GLvoid vNormalizeVector(GLvector &rfVectorResult, GLvector &rfVectorSource)
 //This gradient can be used as a very accurate vertx normal for lighting calculations
 GLvoid vGetNormal(GLvector &rfNormal, GLfloat fX, GLfloat fY, GLfloat fZ)                   // 计算 一点相对于iso的梯度
 {
-    if (  fZ>STEP && fZ<NZ-STEP  &&  fX>STEP && fX<NX-STEP  &&  fY>STEP && fY<NY-STEP  )
+    if (  fZ>STEP && fZ<NZ-STEP  &&  fY>STEP && fY<NY-STEP  &&  fX>STEP && fX<NX-STEP  )
     {
-	    rfNormal.fX = (GLfloat)data[(int)fZ-STEP][(int)fX][(int)fY] - (GLfloat)data[(int)fZ+STEP][(int)fX][(int)fX];
-        rfNormal.fY = (GLfloat)data[(int)fZ][(int)fX-STEP][(int)fY] - (GLfloat)data[(int)fZ][(int)fX+STEP][(int)fX];
-        rfNormal.fZ = (GLfloat)data[(int)fZ][(int)fX][(int)fY-STEP] - (GLfloat)data[(int)fZ][(int)fX][(int)fX+STEP];
+        rfNormal.fX = (GLfloat)data[(int)fZ][(int)fY][(int)fX-STEP] - (GLfloat)data[(int)fZ][(int)fY][(int)fX+STEP];
+        rfNormal.fY = (GLfloat)data[(int)fZ][(int)fY-STEP][(int)fX] - (GLfloat)data[(int)fZ][(int)fY+STEP][(int)fX];
+        rfNormal.fZ = (GLfloat)data[(int)fZ-STEP][(int)fY][(int)fX] - (GLfloat)data[(int)fZ+STEP][(int)fY][(int)fX];
+
         vNormalizeVector(rfNormal, rfNormal);
     }
 }
 
 
-
-GLfloat cubeVertexsValue[8]; //存放指定cube的顶点值
-GLvector asEdgeVertex[12];   //存放交点的位置
-GLvector asEdgeVertexNorm[12];     //存放交点的法向量
 //vMarchCube1 performs the Marching Cubes algorithm on a single cube, Marching Cubes 算法对于一个 单个立方体
 GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
 {
@@ -237,20 +210,21 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
     
     GLint iCorner, iVertex, iEdge, iTriangle, iVertexsFlag, iEdgesFlag;
     GLfloat fOffset;
-    GLvector sColor;
     
-
+    GLfloat cubeVertexsValue[8]; //存放指定cube的顶点值
+    GLvector asEdgeVertex[12];   //存放交点的位置
+    GLvector asEdgeVertexNorm[12];     //存放交点的法向量
     
-    //Make a local copy of the values at the cube's corners  复制一个Cube 的顶点值
+    //获取一个Cube的8个顶点值
     for(iVertex = 0; iVertex < 8; iVertex++)
     {
-        cubeVertexsValue[iVertex] =(GLfloat)data[(int)(fZ + a2fVertexCoordinate[iVertex][0])]
-                                                [(int)(fX + a2fVertexCoordinate[iVertex][1])]
-                                                [(int)(fY + a2fVertexCoordinate[iVertex][2])] ;
+        cubeVertexsValue[iVertex] =(GLfloat)data[(int)(fZ + a2fVertexCoordinate[iVertex][2])]
+                                                [(int)(fY + a2fVertexCoordinate[iVertex][1])]
+                                                [(int)(fX + a2fVertexCoordinate[iVertex][0])] ;
     }
 
     
-    //Find which vertices are inside of the surface and which are outside，如果顶点的值小于iso值，其bit位被置1
+    //判断与iso的关系，如果顶点的值小于iso值(fTargetValue)，其bit位被置1
     iVertexsFlag = 0;
     for(iVertex = 0; iVertex < 8; iVertex++)
     {
@@ -258,7 +232,7 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
             iVertexsFlag |= 1<<iVertex;
     }
     
-    //Find which edges are intersected by the surface，根据 顶点相对iso的位置 在查找表中找到 表示 cube各边与iso的相交关系
+    //根据顶点标记情况 在查找表中获得一个值（表示cube各边与iso的相交关系，有交点的边所在bit位被置1）
     iEdgesFlag = aiCubeEdgeFlags[iVertexsFlag];
     
     //If the cube is entirely inside or outside of the surface, then there will be no intersections
@@ -266,8 +240,8 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
     {
         return;
     }
-    //Find the point of intersection of the surface with each edge，找到各个交点
-    //Then find the normal to the surface at those points，计算各个交点的法向量
+    //计算iso与各个边的交点座标（计算offset，也可以直接近似为中点）
+    //然后计算iso在各个交点处的法向量
     for(iEdge = 0; iEdge < 12; iEdge++)
     {
         //if there is an intersection on this edge
@@ -278,17 +252,20 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
             
             fOffset = fGetOffset(cubeVertexsValue[EdgeEndVertex0], cubeVertexsValue[EdgeEndVertex1], fTargetValue);
 
-            asEdgeVertex[iEdge].fX = fX + (a2fVertexCoordinate[EdgeEndVertex0][0] + fOffset * a2fEdgeDirection[iEdge][0]) ;//* fScale;
-            asEdgeVertex[iEdge].fY = fY + (a2fVertexCoordinate[EdgeEndVertex0][1] + fOffset * a2fEdgeDirection[iEdge][1]) ;//* fScale;
-            asEdgeVertex[iEdge].fZ = fZ + (a2fVertexCoordinate[EdgeEndVertex0][2] + fOffset * a2fEdgeDirection[iEdge][2]) ;//* fScale;
+            asEdgeVertex[iEdge].fX = fX + (a2fVertexCoordinate[EdgeEndVertex0][0] + fOffset * a2fEdgeDirection[iEdge][0]) -(float)(NX/2);//* fScale;
+            asEdgeVertex[iEdge].fY = fY + (a2fVertexCoordinate[EdgeEndVertex0][1] + fOffset * a2fEdgeDirection[iEdge][1]) -(float)(NY/2);//* fScale;
+            asEdgeVertex[iEdge].fZ = fZ + (a2fVertexCoordinate[EdgeEndVertex0][2] + fOffset * a2fEdgeDirection[iEdge][2]) -(float)(NZ/2);//* fScale;
             
-            vGetNormal(asEdgeVertexNorm[iEdge], asEdgeVertex[iEdge].fX, asEdgeVertex[iEdge].fY, asEdgeVertex[iEdge].fZ);
+            vGetNormal(asEdgeVertexNorm[iEdge],
+                       asEdgeVertex[iEdge].fX + (float)(NX/2),
+                       asEdgeVertex[iEdge].fY + (float)(NY/2),
+                       asEdgeVertex[iEdge].fZ + (float)(NZ/2));
         }
     }
     
    
     //generate the triangles vertexs data that were found.  There can be up to five per cube
-
+    //按照查找表获得交点组成三角形的顺序，每个cube最多有5个三角形
     for(iTriangle = 0; iTriangle < 5; iTriangle++)
     {
         if(a2iTriangleConnectionTable[iVertexsFlag][3*iTriangle] < 0)
@@ -297,27 +274,15 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
         for(iCorner = 0; iCorner < 3; iCorner++)
         {
             iEdge = a2iTriangleConnectionTable[iVertexsFlag][3*iTriangle+iCorner];
+          
+            [vertexsDataArray addObject:[NSNumber numberWithFloat:asEdgeVertex[iEdge].fX]];
+            [vertexsDataArray addObject:[NSNumber numberWithFloat:asEdgeVertex[iEdge].fY]];
+            [vertexsDataArray addObject:[NSNumber numberWithFloat:asEdgeVertex[iEdge].fZ]];
             
-            vGetColor(sColor, asEdgeVertex[iEdge], asEdgeVertexNorm[iEdge]);
-            
-            setVertexInVertexData(asEdgeVertex[iEdge].fX, asEdgeVertex[iEdge].fY, asEdgeVertex[iEdge].fZ);
-            setNormalInVertexData(asEdgeVertexNorm[iEdge].fX, asEdgeVertexNorm[iEdge].fY, asEdgeVertexNorm[iEdge].fZ);
-            setColorInVertexData(sColor.fX, sColor.fY, sColor.fZ);
+            [normalsDataArray addObject:[NSNumber numberWithFloat:asEdgeVertexNorm[iEdge].fX]];
+            [normalsDataArray addObject:[NSNumber numberWithFloat:asEdgeVertexNorm[iEdge].fY]];
+            [normalsDataArray addObject:[NSNumber numberWithFloat:asEdgeVertexNorm[iEdge].fZ]];
 
-            NSValue *vertexDataValue = [NSValue valueWithBytes:&vertexData objCType:@encode(ColoredVertexData3D)];
-
-//            if ([vertexsDataArray indexOfObject:vertexDataValue] != NSNotFound) { //如果已经记录，把位置记录在index中
-//                [vertexsIndexArray addObject:[NSNumber numberWithInt:[vertexsDataArray indexOfObject:vertexDataValue]]];
-//            } else { //如果第一次出现，加入vertexsDataArray，在indexArray中记录位置
-//                [vertexsDataArray addObject:vertexDataValue];
-//                [vertexsIndexArray addObject:[NSNumber numberWithInt:[vertexsDataArray indexOfObject:vertexDataValue]]];
-//            }
-           
-            
-            [vertexsDataArray addObject:vertexDataValue];
-//            glColor3f(sColor.fX, sColor.fY, sColor.fZ);
-//            glNormal3f(asEdgeVertexNorm[iEdge].fX, asEdgeVertexNorm[iEdge].fY, asEdgeVertexNorm[iEdge].fZ);
-//            glVertex3f(asEdgeVertex[iEdge].fX, asEdgeVertex[iEdge].fY, asEdgeVertex[iEdge].fZ);
         }
 
     }
@@ -330,39 +295,29 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
 - (GLvoid) vMarchingCubes
 {
     vertexsDataArray = [[NSMutableArray alloc] init];
+    normalsDataArray = [[NSMutableArray alloc] init];
     GLint iX, iY, iZ;
     for(iZ = 0; iZ < NZ-STEP; iZ++)
-        for(iX = 0; iX < NX-STEP; iX++)
-            for(iY = 0; iY < NY-STEP; iY++)
+        for(iY = 0; iY < NY-STEP; iY++)
+            for(iX = 0; iX < NX-STEP; iX++)
             {
-//                if ( (arc4random() % THRESHOLD) < (THRESHOLD - RANGE) ) {
-//                    continue;
-//                }
-//                NSLog(@"NZ: %d, NX: %d, NY: %d", iZ, iX, iY);
                 vMarchCube(iX, iY, iZ, 1);
             }
     
-
     
-    numOfVertexs = [vertexsDataArray count];
-    NSLog(@"num of vertexs: %d", numOfVertexs);
-//    NSLog(@"num of index: %d", [vertexsIndexArray count]);
+    numberOfVertices = [vertexsDataArray count] / 3;
+    NSLog(@"num of vertexs: %d", numberOfVertices);
     
-    [vertexsDataArray writeToFile:@"vertexsDataArray" atomically:YES];
-//    [vertexsIndexArray writeToFile:@"vertexsIndexArray" atomically:YES];
-
-//    ColoredVertexData3D vertexsData[numOfVertexs];
-//    for (int i = 0; i < numOfVertexs; i++) {
-//        [[vertexsDataArray objectAtIndex:i] getValue:&vertexsData[i]];
-//        //[vertexsDataArray removeObject:[vertexsDataArray objectAtIndex:i]];
-//    }
-    
-    vertexsDataArrayPtr = (ColoredVertexData3D *)calloc(numOfVertexs, sizeof(ColoredVertexData3D));
-    for (int i = 0; i < numOfVertexs; i++) {
-        [[vertexsDataArray objectAtIndex:i] getValue:&vertexsDataArrayPtr[i]];
+    if ([vertexsDataArray writeToFile:@"vertexsData" atomically:YES] == NO) {
+        NSLog(@"Save to file failed!");
     }
     
-    
+    vertexsDataArrayPtr = (GLfloat *)calloc(numberOfVertices, 3 * sizeof(GLfloat));
+    normalsDataArrayPtr = (GLfloat *)calloc(numberOfVertices, 3 * sizeof(GLfloat));
+    for (int i = 0; i < numberOfVertices * 3; i++) {
+        [[vertexsDataArray objectAtIndex:i] getValue:&vertexsDataArrayPtr[i]];
+        [[normalsDataArray objectAtIndex:i] getValue:&normalsDataArrayPtr[i]];
+    }
 
 }
 
