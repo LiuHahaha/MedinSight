@@ -111,8 +111,6 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
     SAFE_FREE(pixels16);
     SAFE_FREE(pixels24);
     SAFE_FREE(pixels8);
-
-
 }
 
 - (void) setDicomFilename:(NSString *)filename
@@ -577,7 +575,7 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
     NSString *info = [self getHeaderInfo:tag withValue:value];
     //DLog(@"     info: %@", info);
     
-    NSString *str = [NSString stringWithFormat:@"%X", tag];
+    NSString *str = [NSString stringWithFormat:@"%lX", (long)tag];
     NSString *strInfo = nil;;
     if (inSequence && info != nil && vr != SQ)
     {
@@ -597,9 +595,10 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
     }
 }
 
-- (void) addInfo:(NSInteger) tag withIntValue:(NSInteger)value
+- (void) addInfo:(NSInteger)
+tag withIntValue:(NSInteger)value
 {
-    NSString *str = [NSString stringWithFormat:@"%d", value];
+    NSString *str = [NSString stringWithFormat:@"%ld", (long)value];
     [self addInfo:tag withStringValue:str];
 }
 
@@ -627,7 +626,7 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
 {
     double xscale = 0, yscale = 0;
     NSRange range = [scale rangeOfString:@"\\"];
-    int i = range.location;
+    NSUInteger i = range.location;
     if (i > 0)
     {
         NSString *ystr = [scale substringToIndex:i];
@@ -778,7 +777,7 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
                 {
                     NSString *center = [self getString:elementLength];
                     NSRange range = [center rangeOfString:@"\\"];
-                    int index = range.location;
+                    NSUInteger index = range.location;
                     if (index != NSNotFound)
                         center = [center substringFromIndex:index + 1];
                     
@@ -791,7 +790,7 @@ const int ID_OFFSET                 = 128;  //location of "DICM"
                 {
                     NSString *widthS = [self getString:elementLength];
                     NSRange range = [widthS rangeOfString:@"\\"];
-                    int index = range.location;
+                    NSUInteger index = range.location;
                     if (index != NSNotFound)
                         widthS = [widthS substringFromIndex:index + 1];
                     

@@ -7,6 +7,7 @@
 //
 
 #import "DicomPixelsConverter.h"
+
 @interface DicomPixelsConverter()
 {
     // For Window Level
@@ -122,8 +123,4 @@
     return imageData;
     
 }
-
-
-
-
 @end

@@ -23,7 +23,6 @@
 @end
 
 // KSDicom2DView implementation
-//
 @implementation KSDicom2DView
 
 @synthesize signed16Image;
@@ -122,6 +121,7 @@
 {
     winMax = (winCenter + 0.5 * winWidth);
     winMin = winMax - winWidth;
+    NSLog(@"center:%d  width:%d", winCenter, winWidth);
 }
 
 - (void) resetImage
@@ -142,7 +142,6 @@
 }
 
 // Create a bitmap on the fly, using 8-bit grayscale pixel data
-//
 - (void) createImage8
 {
     if (!pix8) {
@@ -173,7 +172,6 @@
 }
 
 // Create a bitmap on the fly, using 16-bit grayscale pixel data
-//
 - (void) createImage16
 {
     if (!pix16) {
@@ -185,29 +183,12 @@
     if (!imageData) {
         return;
     }
-    
-    //-------------------------------------
-    //revised by leon on 2014.3.8
-//    int max = winCenter + winWidth / 2;
-//    int min = winCenter - winWidth / 2;
-    //-------------------------------------
-    
+
     NSInteger k = 0;
     for (NSInteger i = 0; i < imgHeight; ++i) {
         k = i * imgWidth;
         for (NSInteger j = 0; j < imgWidth; ++j) {
             imageData[k + j] = lut16[pix16[k + j]];
-
-            //----------------------------------------------
-            //revised by leon on 2014.3.8
-//            if (pix16[k + j] > max) {
-//                imageData[k + j] = 255;
-//            } else if (pix16[k + j] < min) {
-//                imageData[k + j] = 0;
-//            } else {
-//                imageData[k + j] = (pix16[k + j] - winCenter + winWidth / 2) / winWidth * 255;
-//            }
-            //----------------------------------------------
         }
     }
     
@@ -221,7 +202,6 @@
 }
 
 // Create a RGBA bitmap on the fly, using 8-bit RGB pixel data
-//
 - (void) createImage24
 {
     if (!pix24) {
@@ -410,10 +390,10 @@
     if (winMax == 0)
         winMax = 65535;
     
+    NSLog(@"%d -- %d", winMin, winMax);
     long range = winMax - winMin;
     if (range < 1)
         range = 1;
-    
     double factor = 255.0 / range;
     for (NSInteger i = 0; i < 65536; ++i)
     {
